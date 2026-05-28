@@ -128,7 +128,7 @@
         }
 
         .question-card {
-            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1), rgba(255, 107, 157, 0.1));
+            background: rgba(10, 10, 20, 0.85);
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 32px 24px;
@@ -145,6 +145,14 @@
         .question-card.animating {
             transform: scale(0.8);
             filter: blur(4px);
+        }
+
+        .question-text {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #ffffff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
         }
 
         .tag {
@@ -247,7 +255,7 @@
                         <span id="rr-category-tag" class="tag tag-category"></span>
                         <span id="rr-level-tag" class="tag"></span>
                     </div>
-                    <div id="rr-question-text" style="font-size: 22px; font-weight: 600; line-height: 1.5;">
+                    <div id="rr-question-text" class="question-text">
                         点击下方按钮<br>抽取一个问题
                     </div>
                 </div>
@@ -288,7 +296,7 @@
                         <span id="picker-category-tag" class="tag tag-category"></span>
                         <span id="picker-level-tag" class="tag"></span>
                     </div>
-                    <div id="picker-question-text" style="font-size: 22px; font-weight: 600; line-height: 1.5;">
+                    <div id="picker-question-text" class="question-text">
                         加载中...
                     </div>
                 </div>
