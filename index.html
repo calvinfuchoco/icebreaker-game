@@ -119,6 +119,28 @@
             transform: scale(0.96);
         }
 
+        .btn-lang {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-lang:active {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -204,37 +226,39 @@
     </style>
 </head>
 <body>
+    <button class="btn-lang" onclick="toggleLang()">TH</button>
+
     <!-- 首页 -->
     <div id="home-page" class="page active">
         <div class="container" style="justify-content: center;">
             <div style="text-align: center;">
                 <div style="margin-bottom: 40px;">
                     <div style="font-size: 64px; margin-bottom: 16px;">🎉</div>
-                    <h1 style="font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">破冰派对</h1>
-                    <p style="color: var(--text-secondary); font-size: 16px;">让陌生的朋友，快速熟悉起来</p>
+                    <h1 id="title-text" style="font-size: 36px; font-weight: 800; background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px;">破冰派对</h1>
+                    <p id="subtitle-text" style="color: var(--text-secondary); font-size: 16px;">让陌生的朋友，快速熟悉起来</p>
                 </div>
                 
                 <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px;">
                     <button class="btn btn-primary" onclick="startRoundRobin()">
                         <div style="font-size: 20px; margin-bottom: 4px;">🔄</div>
-                        <div>轮流模式</div>
-                        <div style="font-size: 12px; font-weight: 400; opacity: 0.8; margin-top: 4px;">轮流转盘抽题，抽到的人回答</div>
+                        <div id="rr-mode-text">轮流模式</div>
+                        <div id="rr-mode-desc" style="font-size: 12px; font-weight: 400; opacity: 0.8; margin-top: 4px;">轮流转盘抽题，抽到的人回答</div>
                     </button>
                     
                     <button class="btn btn-secondary" onclick="startPickerMode()">
                         <div style="font-size: 20px; margin-bottom: 4px;">🎯</div>
-                        <div>出题模式</div>
-                        <div style="font-size: 12px; font-weight: 400; opacity: 0.7; margin-top: 4px;">你选问题，指定某人回答</div>
+                        <div id="picker-mode-text">出题模式</div>
+                        <div id="picker-mode-desc" style="font-size: 12px; font-weight: 400; opacity: 0.7; margin-top: 4px;">你选问题，指定某人回答</div>
                     </button>
                 </div>
                 
                 <button class="btn btn-secondary" onclick="showBrowsePage()" style="font-size: 14px; padding: 12px;">
-                    📚 浏览问题库
+                    <span id="browse-text">📚 浏览问题库</span>
                 </button>
                 
                 <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
                     <button class="btn btn-secondary" onclick="shareGame()" style="font-size: 14px; padding: 12px;">
-                        📤 分享给朋友
+                        <span id="share-text">📤 分享给朋友</span>
                     </button>
                 </div>
             </div>
@@ -246,12 +270,12 @@
         <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <button class="back-btn" onclick="goHome()">←</button>
-                <h2 style="font-size: 18px; font-weight: 600;">轮流模式</h2>
+                <h2 id="rr-page-title" style="font-size: 18px; font-weight: 600;">轮流模式</h2>
                 <div style="width: 40px;"></div>
             </div>
             
             <div style="text-align: center; margin-bottom: 30px;">
-                <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">当前回答者</div>
+                <div id="rr-current-label" style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">当前回答者</div>
                 <input type="text" id="current-player" value="玩家 1" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; color: white; font-size: 18px; text-align: center; width: 200px; outline: none;">
             </div>
             
@@ -267,15 +291,15 @@
                 </div>
                 
                 <button id="rr-draw-btn" class="btn btn-primary" onclick="drawQuestionRR()" style="margin-bottom: 12px;">
-                    🎲 抽一个问题
+                    <span id="rr-draw-text">🎲 抽一个问题</span>
                 </button>
                 
                 <div id="rr-actions" style="display: none; flex-direction: column; gap: 12px;">
                     <button class="btn btn-primary" onclick="nextPlayer()">
-                        ✓ 回答完毕，下一位
+                        <span id="rr-next-text">✓ 回答完毕，下一位</span>
                     </button>
                     <button class="btn btn-secondary" onclick="skipQuestionRR()">
-                        ↷ 跳过，重抽
+                        <span id="rr-skip-text">↷ 跳过，重抽</span>
                     </button>
                 </div>
             </div>
@@ -287,12 +311,12 @@
         <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <button class="back-btn" onclick="goHome()">←</button>
-                <h2 style="font-size: 18px; font-weight: 600;">出题模式</h2>
+                <h2 id="picker-page-title" style="font-size: 18px; font-weight: 600;">出题模式</h2>
                 <div style="width: 40px;"></div>
             </div>
             
             <div style="margin-bottom: 20px;">
-                <div style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">问题分类</div>
+                <div id="picker-filter-label" style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">问题分类</div>
                 <div id="picker-filters" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
             </div>
             
@@ -309,10 +333,10 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <button class="btn btn-primary" onclick="refreshQuestionPicker()">
-                        🔄 换一题
+                        <span id="picker-change-text">🔄 换一题</span>
                     </button>
                     <button class="btn btn-secondary" onclick="showPickerTarget()">
-                        🎯 指定回答
+                        <span id="picker-target-text">🎯 指定回答</span>
                     </button>
                 </div>
             </div>
@@ -324,7 +348,7 @@
         <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <button class="back-btn" onclick="goHome()">←</button>
-                <h2 style="font-size: 18px; font-weight: 600;">问题库</h2>
+                <h2 id="browse-page-title" style="font-size: 18px; font-weight: 600;">问题库</h2>
                 <div style="width: 40px;"></div>
             </div>
             
@@ -337,84 +361,233 @@
     </div>
 
     <script>
+        const i18n = {
+            zh: {
+                title: '破冰派对',
+                subtitle: '让陌生的朋友，快速熟悉起来',
+                rrMode: '轮流模式',
+                rrModeDesc: '轮流转盘抽题，抽到的人回答',
+                pickerMode: '出题模式',
+                pickerModeDesc: '你选问题，指定某人回答',
+                browse: '📚 浏览问题库',
+                share: '📤 分享给朋友',
+                rrPageTitle: '轮流模式',
+                rrCurrentLabel: '当前回答者',
+                rrDraw: '🎲 抽一个问题',
+                rrDrawPlaceholder: '点击下方按钮<br>抽取一个问题',
+                rrNext: '✓ 回答完毕，下一位',
+                rrSkip: '↷ 跳过，重抽',
+                pickerPageTitle: '出题模式',
+                pickerFilterLabel: '问题分类',
+                pickerChange: '🔄 换一题',
+                pickerTarget: '🎯 指定回答',
+                pickerLoading: '加载中...',
+                browsePageTitle: '问题库',
+                player: '玩家',
+                all: '全部',
+                easy: '轻松',
+                medium: '趣味',
+                hard: '深度',
+                shareTitle: '破冰派对',
+                shareText: '🎉 来玩「破冰派对」！让陌生的朋友快速熟悉起来~',
+                shareCopied: '链接已复制，快去分享给朋友吧！',
+                pickerPrompt: '请指定回答者名字（可选）:',
+                pickerAlert: '请',
+                pickerAlert2: '回答这个问题！',
+                friendship: '中泰友谊'
+            },
+            th: {
+                title: 'ปาร์ตี้ละลายน้ำแข็ง',
+                subtitle: 'ทำความรู้จักเพื่อนใหม่ให้เร็วขึ้น',
+                rrMode: 'โหมดหมุนเวียน',
+                rrModeDesc: 'สุ่มคำถาม ผลัดกันตอบ',
+                pickerMode: 'โหมดเลือกถาม',
+                pickerModeDesc: 'เลือกคำถาม 指定ใครตอบ',
+                browse: '📚 ดูคำถามทั้งหมด',
+                share: '📤 แชร์ให้เพื่อน',
+                rrPageTitle: 'โหมดหมุนเวียน',
+                rrCurrentLabel: 'ผู้ตอบปัจจุบัน',
+                rrDraw: '🎲 สุ่มคำถาม',
+                rrDrawPlaceholder: 'กดปุ่มด้านล่าง<br>เพื่อสุ่มคำถาม',
+                rrNext: '✓ ตอบแล้ว คนต่อไป',
+                rrSkip: '↷ ข้าม สุ่มใหม่',
+                pickerPageTitle: 'โหมดเลือกถาม',
+                pickerFilterLabel: 'หมวดหมู่คำถาม',
+                pickerChange: '🔄 เปลี่ยนคำถาม',
+                pickerTarget: '🎯 指定คนตอบ',
+                pickerLoading: 'กำลังโหลด...',
+                browsePageTitle: 'คลังคำถาม',
+                player: 'คนที่',
+                all: 'ทั้งหมด',
+                easy: 'ง่าย',
+                medium: 'สนุก',
+                hard: 'ลึกซึ้ง',
+                shareTitle: 'ปาร์ตี้ละลายน้ำแข็ง',
+                shareText: '🎉 มาเล่น「ปาร์ตี้ละลายน้ำแข็ง」กัน! ทำความรู้จักเพื่อนใหม่ให้เร็วขึ้น~',
+                shareCopied: 'คัดลอกลิงก์แล้ว แชร์ให้เพื่อนกันเลย!',
+                pickerPrompt: 'ใส่ชื่อผู้ตอบ (ไม่บังคับ):',
+                pickerAlert: 'เชิญ',
+                pickerAlert2: 'ตอบคำถามนี้!',
+                friendship: 'มิตรภาพจีน-ไทย'
+            }
+        };
+
+        const categories = ["全部", "穿搭时尚", "宠物生活", "美食旅行", "社会潮流", "普鲁斯特问卷", "趣味脑洞", "中泰友谊"];
+
         const questionDB = [
-            { id: 1, question: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", category: "穿搭时尚", level: "easy" },
-            { id: 2, question: "你今天的穿搭灵感是什么？", category: "穿搭时尚", level: "easy" },
-            { id: 3, question: "如果预算无限，你最想入手的一件单品是什么？", category: "穿搭时尚", level: "easy" },
-            { id: 4, question: "你是什么风格？极简/街头/复古/甜美/运动？", category: "穿搭时尚", level: "easy" },
-            { id: 5, question: "你买过最后悔的一件衣服是什么？", category: "穿搭时尚", level: "medium" },
-            { id: 6, question: "如果让你给今天的自己搭配一套衣服，你会怎么搭？", category: "穿搭时尚", level: "easy" },
-            { id: 7, question: "你觉得穿搭最重要的是什么？舒适/个性/品牌/潮流？", category: "穿搭时尚", level: "medium" },
-            { id: 8, question: "你有没有因为某件衣服被夸过？", category: "穿搭时尚", level: "easy" },
-            { id: 9, question: "如果要去一个荒岛，只能带三件衣服，你带什么？", category: "穿搭时尚", level: "medium" },
-            { id: 10, question: "你最喜欢的时尚博主或明星是谁？", category: "穿搭时尚", level: "easy" },
+            { id: 1, question_zh: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", question_th: "ถ้าคุณใส่เสื้อผ้าสีเดียวไปตลอดชีวิต จะเลือกสีอะไร?", category: "穿搭时尚", level: "easy" },
+            { id: 2, question_zh: "你今天的穿搭灵感是什么？", question_th: "วันนี้คุณได้แรงบันดาลใจในการแต่งตัวมาจากอะไร?", category: "穿搭时尚", level: "easy" },
+            { id: 3, question_zh: "如果预算无限，你最想入手的一件单品是什么？", question_th: "ถ้าไม่มีจำกัดงบ อยากได้ไอเท็มชิ้นไหนมากที่สุด?", category: "穿搭时尚", level: "easy" },
+            { id: 4, question_zh: "你是什么风格？极简/街头/复古/甜美/运动？", question_th: "สไตล์คุณเป็นแนวไหน? มินิมอล/สตรีท/วินเทจ/หวาน/สปอร์ต?", category: "穿搭时尚", level: "easy" },
+            { id: 5, question_zh: "你买过最后悔的一件衣服是什么？", question_th: "เสื้อผ้าชิ้นไหนที่ซื้อมาแล้วเสียใจที่สุด?", category: "穿搭时尚", level: "medium" },
+            { id: 6, question_zh: "如果让你给今天的自己搭配一套衣服，你会怎么搭？", question_th: "ถ้าให้แต่งตัวให้ตัวเองวันนี้ จะแต่งยังไง?", category: "穿搭时尚", level: "easy" },
+            { id: 7, question_zh: "你觉得穿搭最重要的是什么？舒适/个性/品牌/潮流？", question_th: "คิดว่าการแต่งตัวสำคัญที่สุดอะไร? สบาย/บุคลิก/แบรนด์/เทรนด์?", category: "穿搭时尚", level: "medium" },
+            { id: 8, question_zh: "你有没有因为某件衣服被夸过？", question_th: "เคยถูกชมเพราะเสื้อผ้าชิ้นไหนบ้างไหม?", category: "穿搭时尚", level: "easy" },
+            { id: 9, question_zh: "如果要去一个荒岛，只能带三件衣服，你带什么？", question_th: "ถ้าต้องไปเกาะร้าง เอาเสื้อผ้าได้แค่ 3 ชิ้น จะเอาอะไร?", category: "穿搭时尚", level: "medium" },
+            { id: 10, question_zh: "你最喜欢的时尚博主或明星是谁？", question_th: "บล็อกเกอร์หรือดาราแฟชั่นคนโปรดคือใคร?", category: "穿搭时尚", level: "easy" },
 
-            { id: 11, question: "猫派还是狗派？为什么？", category: "宠物生活", level: "easy" },
-            { id: 12, question: "如果你可以养任何动物当宠物（不限现实），你选什么？", category: "宠物生活", level: "medium" },
-            { id: 13, question: "你宠物最搞笑的一个习惯是什么？（没养可以说理想的）", category: "宠物生活", level: "easy" },
-            { id: 14, question: "你觉得养宠物最大的挑战是什么？", category: "宠物生活", level: "medium" },
-            { id: 15, question: "如果宠物会说话，你觉得它第一句会说什么？", category: "宠物生活", level: "medium" },
-            { id: 16, question: "你更喜欢大型宠物还是小型宠物？", category: "宠物生活", level: "easy" },
-            { id: 17, question: "如果让你变成一种动物，你想变成什么？", category: "宠物生活", level: "medium" },
-            { id: 18, question: "你最喜欢去动物园看哪种动物？", category: "宠物生活", level: "easy" },
-            { id: 19, question: "你觉得养宠物和养孩子哪个更难？", category: "宠物生活", level: "hard" },
-            { id: 20, question: "描述一下你理想中宠物的一天生活", category: "宠物生活", level: "medium" },
+            { id: 11, question_zh: "猫派还是狗派？为什么？", question_th: "ชอบแมวหรือหมา? ทำไม?", category: "宠物生活", level: "easy" },
+            { id: 12, question_zh: "如果你可以养任何动物当宠物（不限现实），你选什么？", question_th: "ถ้าเลี้ยงสัตว์อะไรก็ได้เป็นสัตว์เลี้ยง (ไม่จำกัดความเป็นจริง) จะเลือกอะไร?", category: "宠物生活", level: "medium" },
+            { id: 13, question_zh: "你宠物最搞笑的一个习惯是什么？（没养可以说理想的）", question_th: "นิสัยที่ตลกที่สุดของสัตว์เลี้ยงคุณคืออะไร?", category: "宠物生活", level: "easy" },
+            { id: 14, question_zh: "你觉得养宠物最大的挑战是什么？", question_th: "คิดว่าความท้าทายที่สุดของการเลี้ยงสัตว์คืออะไร?", category: "宠物生活", level: "medium" },
+            { id: 15, question_zh: "如果宠物会说话，你觉得它第一句会说什么？", question_th: "ถ้าสัตว์เลี้ยงพูดได้ คิดว่ามันจะพูดอะไรเป็นประโยคแรก?", category: "宠物生活", level: "medium" },
+            { id: 16, question_zh: "你更喜欢大型宠物还是小型宠物？", question_th: "ชอบสัตว์เลี้ยงตัวใหญ่หรือตัวเล็ก?", category: "宠物生活", level: "easy" },
+            { id: 17, question_zh: "如果让你变成一种动物，你想变成什么？", question_th: "ถ้าให้คุณกลายเป็นสัตว์สักชนิด อยากเป็นอะไร?", category: "宠物生活", level: "medium" },
+            { id: 18, question_zh: "你最喜欢去动物园看哪种动物？", question_th: "ชอบไปสวนสัตว์ดูสัตว์ชนิดไหนมากที่สุด?", category: "宠物生活", level: "easy" },
+            { id: 19, question_zh: "你觉得养宠物和养孩子哪个更难？", question_th: "คิดว่าเลี้ยงสัตว์กับเลี้ยงเด็ก อันไหนยากกว่ากัน?", category: "宠物生活", level: "hard" },
+            { id: 20, question_zh: "描述一下你理想中宠物的一天生活", question_th: "อธิบายชีวิตวันหนึ่งในอุดมคติของสัตว์เลี้ยงคุณ", category: "宠物生活", level: "medium" },
 
-            { id: 21, question: "你吃过最奇怪的食物是什么？", category: "美食旅行", level: "easy" },
-            { id: 22, question: "如果明天可以免费飞去任何地方吃顿饭，你去哪？", category: "美食旅行", level: "medium" },
-            { id: 23, question: "甜咸豆腐脑/汤圆，你站哪边？", category: "美食旅行", level: "easy" },
-            { id: 24, question: "你最喜欢的家乡美食是什么？", category: "美食旅行", level: "easy" },
-            { id: 25, question: "如果只能吃一种 cuisine（中餐/日料/意餐/泰餐等）一辈子，你选哪个？", category: "美食旅行", level: "medium" },
-            { id: 26, question: "你最想尝试但还没机会吃的美食是什么？", category: "美食旅行", level: "easy" },
-            { id: 27, question: "如果让你推荐一家你城市最好吃的店，你推荐哪家？", category: "美食旅行", level: "easy" },
-            { id: 28, question: "你旅行时最看重什么？美食/风景/文化/购物？", category: "美食旅行", level: "medium" },
-            { id: 29, question: "你最难忘的一次旅行经历是什么？", category: "美食旅行", level: "medium" },
-            { id: 30, question: "如果可以去世界上任何一个地方住一年，你选哪里？", category: "美食旅行", level: "medium" },
-            { id: 31, question: "你更喜欢海边还是山里？", category: "美食旅行", level: "easy" },
-            { id: 32, question: "旅行中你必带的三样东西是什么？", category: "美食旅行", level: "easy" },
+            { id: 21, question_zh: "你吃过最奇怪的食物是什么？", question_th: "อาหารที่แปลกที่สุดที่เคยทานคืออะไร?", category: "美食旅行", level: "easy" },
+            { id: 22, question_zh: "如果明天可以免费飞去任何地方吃顿饭，你去哪？", question_th: "ถ้าพรุ่งนี้บินฟรีไปกินข้าวที่ไหนก็ได้ จะไปที่ไหน?", category: "美食旅行", level: "medium" },
+            { id: 23, question_zh: "甜咸豆腐脑/汤圆，你站哪边？", question_th: "เต้าหู้หวานหรือเค็ม? ขนมจีบหวานหรือเค็ม? คุณอยู่ฝ่ายไหน?", category: "美食旅行", level: "easy" },
+            { id: 24, question_zh: "你最喜欢的家乡美食是什么？", question_th: "อาหาร家乡ที่ชอบที่สุดคืออะไร?", category: "美食旅行", level: "easy" },
+            { id: 25, question_zh: "如果只能吃一种料理一辈子，你选哪个？", question_th: "ถ้ากินอาหารประเภทเดียวไปตลอดชีวิต จะเลือกอะไร?", category: "美食旅行", level: "medium" },
+            { id: 26, question_zh: "你最想尝试但还没机会吃的美食是什么？", question_th: "อาหารอะไรที่อยากลองแต่ยังไม่มีโอกาส?", category: "美食旅行", level: "easy" },
+            { id: 27, question_zh: "如果让你推荐一家你城市最好吃的店，你推荐哪家？", question_th: "ถ้าให้推荐ร้านอาหารที่อร่อยที่สุดในเมืองคุณ จะ推荐ร้านไหน?", category: "美食旅行", level: "easy" },
+            { id: 28, question_zh: "你旅行时最看重什么？美食/风景/文化/购物？", question_th: "เวลาเที่ยวอะไรสำคัญที่สุด? อาหาร/วิว/문화/ช้อปปิ้ง?", category: "美食旅行", level: "medium" },
+            { id: 29, question_zh: "你最难忘的一次旅行经历是什么？", question_th: "ประสบการณ์เที่ยวที่น่าจดจำที่สุดคืออะไร?", category: "美食旅行", level: "medium" },
+            { id: 30, question_zh: "如果可以去世界上任何一个地方住一年，你选哪里？", question_th: "ถ้าไปอยู่ที่ไหนก็ได้ในโลกสักหนึ่งปี จะเลือกที่ไหน?", category: "美食旅行", level: "medium" },
+            { id: 31, question_zh: "你更喜欢海边还是山里？", question_th: "ชอบทะเลหรือภูเขามากกว่ากัน?", category: "美食旅行", level: "easy" },
+            { id: 32, question_zh: "旅行中你必带的三样东西是什么？", question_th: "เวลาเที่ยวต้องพก 3 สิ่งอะไรบ้าง?", category: "美食旅行", level: "easy" },
 
-            { id: 33, question: "最近有看什么剧/电影/综艺吗？推荐一部", category: "社会潮流", level: "easy" },
-            { id: 34, question: "如果只能留一个 App 在手机里，你留哪个？", category: "社会潮流", level: "medium" },
-            { id: 35, question: "你相信 AI 会取代你的工作吗？", category: "社会潮流", level: "medium" },
-            { id: 36, question: "你最近单曲循环的一首歌是什么？", category: "社会潮流", level: "easy" },
-            { id: 37, question: "如果穿越回十年前，你会对自己说什么？", category: "社会潮流", level: "medium" },
-            { id: 38, question: "你觉得未来十年最大的变化会是什么？", category: "社会潮流", level: "hard" },
-            { id: 39, question: "你更喜欢线上社交还是线下见面？", category: "社会潮流", level: "easy" },
-            { id: 40, question: "如果有一百万，你会怎么花？", category: "社会潮流", level: "medium" },
-            { id: 41, question: "你觉得什么是现在年轻人最焦虑的事？", category: "社会潮流", level: "hard" },
-            { id: 42, question: "你最近学到的一个新技能或知识是什么？", category: "社会潮流", level: "easy" },
+            { id: 33, question_zh: "最近有看什么剧/电影/综艺吗？推荐一部", question_th: "ช่วงนี้ดูซีรีส์/หนัง/รายการอะไรอยู่? แนะนำหน่อย", category: "社会潮流", level: "easy" },
+            { id: 34, question_zh: "如果只能留一个 App 在手机里，你留哪个？", question_th: "ถ้าเก็บแอปเดียวไว้ในมือถือ จะเก็บแอปไหน?", category: "社会潮流", level: "medium" },
+            { id: 35, question_zh: "你相信 AI 会取代你的工作吗？", question_th: "คุณเชื่อไหมว่า AI จะมาแทนที่งานของคุณ?", category: "社会潮流", level: "medium" },
+            { id: 36, question_zh: "你最近单曲循环的一首歌是什么？", question_th: "เพลงที่คุณฟังซ้ำๆ ช่วงนี้คือเพลงอะไร?", category: "社会潮流", level: "easy" },
+            { id: 37, question_zh: "如果穿越回十年前，你会对自己说什么？", question_th: "ถ้ากลับไปเมื่อสิบปีก่อน จะบอกอะไรกับตัวเอง?", category: "社会潮流", level: "medium" },
+            { id: 38, question_zh: "你觉得未来十年最大的变化会是什么？", question_th: "คิดว่าการเปลี่ยนแปลงที่ใหญ่ที่สุดในสิบปีข้างหน้าคืออะไร?", category: "社会潮流", level: "hard" },
+            { id: 39, question_zh: "你更喜欢线上社交还是线下见面？", question_th: "ชอบ社交ออนไลน์หรือเจอหน้ากันจริงๆ?", category: "社会潮流", level: "easy" },
+            { id: 40, question_zh: "如果有一百万，你会怎么花？", question_th: "ถ้ามีเงินล้าน จะใช้ยังไง?", category: "社会潮流", level: "medium" },
+            { id: 41, question_zh: "你觉得什么是现在年轻人最焦虑的事？", question_th: "คิดว่าอะไรคือสิ่งที่คนรุ่นใหม่กังวลมากที่สุด?", category: "社会潮流", level: "hard" },
+            { id: 42, question_zh: "你最近学到的一个新技能或知识是什么？", question_th: "ทักษะหรือความรู้ใหม่ที่เพิ่งเรียนเมื่อเร็วๆ นี้คืออะไร?", category: "社会潮流", level: "easy" },
 
-            { id: 43, question: "你最喜欢的品质是什么？（自己或他人）", category: "普鲁斯特问卷", level: "medium" },
-            { id: 44, question: "你最痛恨自己的哪个特点？", category: "普鲁斯特问卷", level: "hard" },
-            { id: 45, question: "如果可以改变一件事，你最想改变什么？", category: "普鲁斯特问卷", level: "hard" },
-            { id: 46, question: "你最大的恐惧是什么？", category: "普鲁斯特问卷", level: "hard" },
-            { id: 47, question: "你最理想的生活状态是什么样的？", category: "普鲁斯特问卷", level: "medium" },
-            { id: 48, question: "你觉得自己最大的优点是什么？", category: "普鲁斯特问卷", level: "medium" },
-            { id: 49, question: "如果可以重来，你最想修正的一个决定是什么？", category: "普鲁斯特问卷", level: "hard" },
-            { id: 50, question: "你觉得什么是真正的幸福？", category: "普鲁斯特问卷", level: "hard" },
-            { id: 51, question: "你最珍惜的一段关系是什么？", category: "普鲁斯特问卷", level: "medium" },
-            { id: 52, question: "如果可以拥有一种超能力，你选什么？为什么？", category: "普鲁斯特问卷", level: "medium" },
+            { id: 43, question_zh: "你最喜欢的品质是什么？（自己或他人）", question_th: "คุณภาพที่ชอบที่สุดคืออะไร? (ของตัวเองหรือคนอื่น)", category: "普鲁斯特问卷", level: "medium" },
+            { id: 44, question_zh: "你最痛恨自己的哪个特点？", question_th: "ลักษณะไหนของตัวเองที่เกลียดที่สุด?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 45, question_zh: "如果可以改变一件事，你最想改变什么？", question_th: "ถ้าเปลี่ยนอะไรได้สักอย่าง อยากเปลี่ยนอะไร?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 46, question_zh: "你最大的恐惧是什么？", question_th: "ความกลัวที่ใหญ่ที่สุดของคุณคืออะไร?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 47, question_zh: "你最理想的生活状态是什么样的？", question_th: "ชีวิตในอุดมคติของคุณเป็นยังไง?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 48, question_zh: "你觉得自己最大的优点是什么？", question_th: "คิดว่าจุดเด่นที่สุดของตัวเองคืออะไร?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 49, question_zh: "如果可以重来，你最想修正的一个决定是什么？", question_th: "ถ้าเริ่มใหม่ได้ การตัดสินใจไหนที่อยากแก้มากที่สุด?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 50, question_zh: "你觉得什么是真正的幸福？", question_th: "คิดว่าความสุขที่แท้จริงคืออะไร?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 51, question_zh: "你最珍惜的一段关系是什么？", question_th: "ความสัมพันธ์ไหนที่คุณหวงแหนที่สุด?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 52, question_zh: "如果可以拥有一种超能力，你选什么？为什么？", question_th: "ถ้ามีพลังวิเศษได้สักอย่าง จะเลือกอะไร? ทำไม?", category: "普鲁斯特问卷", level: "medium" },
 
-            { id: 53, question: "如果你有一种超能力，但必须付出一个代价，你选什么？", category: "趣味脑洞", level: "medium" },
-            { id: 54, question: "如果可以和任何历史人物吃顿饭，你选谁？", category: "趣味脑洞", level: "medium" },
-            { id: 55, question: "描述一下你理想中完美的一天", category: "趣味脑洞", level: "easy" },
-            { id: 56, question: "如果你是一部电影的主角，会是什么类型的电影？", category: "趣味脑洞", level: "medium" },
-            { id: 57, question: "如果明天醒来你变成了一种颜色，你希望是什么颜色？", category: "趣味脑洞", level: "easy" },
-            { id: 58, question: "你觉得你的灵魂动物是什么？", category: "趣味脑洞", level: "easy" },
-            { id: 59, question: "如果可以和任何虚构角色做一天朋友，你选谁？", category: "趣味脑洞", level: "medium" },
-            { id: 60, question: "你觉得十年后的自己会在做什么？", category: "趣味脑洞", level: "medium" },
-            { id: 61, question: "如果世界上只剩最后一顿饭，你想吃什么？", category: "趣味脑洞", level: "easy" },
-            { id: 62, question: "你觉得外星人存在吗？如果存在，它们长什么样？", category: "趣味脑洞", level: "easy" }
+            { id: 53, question_zh: "如果你有一种超能力，但必须付出一个代价，你选什么？", question_th: "ถ้ามีพลังวิเศษแต่ต้องแลกกับอะไรสักอย่าง จะเลือกอะไร?", category: "趣味脑洞", level: "medium" },
+            { id: 54, question_zh: "如果可以和任何历史人物吃顿饭，你选谁？", question_th: "ถ้ากินข้าวกับบุคคลในประวัติศาสตร์ได้ จะเลือกใคร?", category: "趣味脑洞", level: "medium" },
+            { id: 55, question_zh: "描述一下你理想中完美的一天", question_th: "อธิบายวันที่สมบูรณ์แบบในอุดมคติของคุณ", category: "趣味脑洞", level: "easy" },
+            { id: 56, question_zh: "如果你是一部电影的主角，会是什么类型的电影？", question_th: "ถ้าคุณเป็นพระเอกหนัง จะเป็นหนังประเภทไหน?", category: "趣味脑洞", level: "medium" },
+            { id: 57, question_zh: "如果明天醒来你变成了一种颜色，你希望是什么颜色？", question_th: "ถ้าพรุ่งนี้ตื่นมา变成เป็นสีสักสี อยากเป็นสีอะไร?", category: "趣味脑洞", level: "easy" },
+            { id: 58, question_zh: "你觉得你的灵魂动物是什么？", question_th: "คิดว่าสัตว์คู่ใจของคุณคืออะไร?", category: "趣味脑洞", level: "easy" },
+            { id: 59, question_zh: "如果可以和任何虚构角色做一天朋友，你选谁？", question_th: "ถ้าเป็นเพื่อนกับตัวละครในจินตนาการได้หนึ่งวัน จะเลือกใคร?", category: "趣味脑洞", level: "medium" },
+            { id: 60, question_zh: "你觉得十年后的自己会在做什么？", question_th: "คิดว่าอีกสิบปีข้างหน้าตัวเองจะทำอะไร?", category: "趣味脑洞", level: "medium" },
+            { id: 61, question_zh: "如果世界上只剩最后一顿饭，你想吃什么？", question_th: "ถ้าโลกนี้เหลืออาหารมื้อสุดท้าย อยากกินอะไร?", category: "趣味脑洞", level: "easy" },
+            { id: 62, question_zh: "你觉得外星人存在吗？如果存在，它们长什么样？", question_th: "คิดว่ามนุษย์ต่างดาวมีจริงไหม? ถ้ามี หน้าตาเป็นยังไง?", category: "趣味脑洞", level: "easy" },
+
+            { id: 63, question_zh: "你去过泰国吗？最想推荐给泰国朋友的一道中国菜是什么？", question_th: "คุณเคยไปไทยไหม? อาหารจีนจานไหนที่อยากแนะนำให้เพื่อนไทย?", category: "中泰友谊", level: "easy" },
+            { id: 64, question_zh: "你想学的一句泰语是什么？或者你会的第一个泰语词是什么？", question_th: "อยากเรียนภาษาไทยคำไหน? หรือคำไทยคำแรกที่คุณรู้คืออะไร?", category: "中泰友谊", level: "easy" },
+            { id: 65, question_zh: "你觉得中国人最像泰国人的一个特点是什么？", question_th: "คิดว่าลักษณะไหนที่คนจีนคล้ายคนไทยมากที่สุด?", category: "中泰友谊", level: "medium" },
+            { id: 66, question_zh: "如果让你给泰国朋友推荐一个中国城市去旅行，你推荐哪里？", question_th: "ถ้าให้แนะนำเมืองจีนให้เพื่อนไทย去เที่ยว จะ推荐เมืองไหน?", category: "中泰友谊", level: "medium" },
+            { id: 67, question_zh: "火锅 VS 冬阴功，你更喜欢哪个？为什么？", question_th: "หม้อไฟ VS ต้มยำกุ้ง ชอบอันไหนมากกว่า? ทำไม?", category: "中泰友谊", level: "easy" },
+            { id: 68, question_zh: "你知道哪些泰国明星或演员？最喜欢谁？", question_th: "รู้จักดาราหรือนักแสดงไทยคนไหน? ชอบใครมากที่สุด?", category: "中泰友谊", level: "easy" },
+            { id: 69, question_zh: "如果让你用一个词形容泰国人，你会用什么词？", question_th: "ถ้าให้ใช้คำเดียว描述คนไทย จะใช้คำว่าอะไร?", category: "中泰友谊", level: "medium" },
+            { id: 70, question_zh: "你觉得中泰两国最相似的文化习俗是什么？", question_th: "คิดว่าประเพณีที่คล้ายกันที่สุดระหว่างจีนกับไทยคืออะไร?", category: "中泰友谊", level: "medium" },
+            { id: 71, question_zh: "你最喜欢的泰国美食是什么？或者最想尝试什么？", question_th: "อาหารไทยที่ชอบที่สุดคืออะไร? หรืออยากลองอะไร?", category: "中泰友谊", level: "easy" },
+            { id: 72, question_zh: "如果中泰合拍一部电影，你希望是谁主演、什么题材？", question_th: "ถ้าจีน-ไทยทำหนังร่วมกัน อยากให้ใครแสดงและแนวอะไร?", category: "中泰友谊", level: "medium" },
+            { id: 73, question_zh: "泰国和中国最大的文化差异你觉得是什么？", question_th: "ความแตกต่างทางวัฒนธรรมที่ใหญ่ที่สุดระหว่างไทยกับจีนคืออะไร?", category: "中泰友谊", level: "hard" },
+            { id: 74, question_zh: "如果让你教泰国朋友一句中文，你教什么？", question_th: "ถ้าให้สอนภาษาจีนให้เพื่อนไทยหนึ่งประโยค จะสอนอะไร?", category: "中泰友谊", level: "easy" },
+            { id: 75, question_zh: "你觉得泰国人最热爱什么活动？", question_th: "คิดว่าคนไทยชอบทำกิจกรรมอะไรมากที่สุด?", category: "中泰友谊", level: "easy" },
+            { id: 76, question_zh: "如果你去泰国开一家店，你会开什么类型的店？", question_th: "ถ้าไปเปิดร้านที่ไทย จะเปิดร้านประเภทไหน?", category: "中泰友谊", level: "medium" },
+            { id: 77, question_zh: "你觉得中泰友谊中最重要的是什么？", question_th: "คิดว่าอะไรสำคัญที่สุดในมิตรภาพจีน-ไทย?", category: "中泰友谊", level: "medium" }
         ];
 
-        const categories = ["全部", "穿搭时尚", "宠物生活", "美食旅行", "社会潮流", "普鲁斯特问卷", "趣味脑洞"];
-
+        let currentLang = 'zh';
         let currentPlayerIndex = 1;
         let currentQuestionRR = null;
         let usedQuestionsRR = new Set();
         let pickerFilter = '全部';
         let currentQuestionPicker = null;
         let browseFilter = '全部';
+
+        function t(key) {
+            return i18n[currentLang][key] || key;
+        }
+
+        function qText(item) {
+            return currentLang === 'zh' ? item.question_zh : item.question_th;
+        }
+
+        function getLevelLabel(level) {
+            const map = { easy: t('easy'), medium: t('medium'), hard: t('hard') };
+            return map[level] || level;
+        }
+
+        function renderUI() {
+            document.getElementById('title-text').textContent = t('title');
+            document.getElementById('subtitle-text').textContent = t('subtitle');
+            document.getElementById('rr-mode-text').textContent = t('rrMode');
+            document.getElementById('rr-mode-desc').textContent = t('rrModeDesc');
+            document.getElementById('picker-mode-text').textContent = t('pickerMode');
+            document.getElementById('picker-mode-desc').textContent = t('pickerModeDesc');
+            document.getElementById('browse-text').textContent = t('browse');
+            document.getElementById('share-text').textContent = t('share');
+            document.getElementById('rr-page-title').textContent = t('rrPageTitle');
+            document.getElementById('rr-current-label').textContent = t('rrCurrentLabel');
+            document.getElementById('rr-draw-text').textContent = t('rrDraw');
+            document.getElementById('rr-next-text').textContent = t('rrNext');
+            document.getElementById('rr-skip-text').textContent = t('rrSkip');
+            document.getElementById('picker-page-title').textContent = t('pickerPageTitle');
+            document.getElementById('picker-filter-label').textContent = t('pickerFilterLabel');
+            document.getElementById('picker-change-text').textContent = t('pickerChange');
+            document.getElementById('picker-target-text').textContent = t('pickerTarget');
+            document.getElementById('browse-page-title').textContent = t('browsePageTitle');
+            document.getElementById('rr-question-text').innerHTML = t('rrDrawPlaceholder');
+            document.getElementById('picker-question-text').textContent = t('pickerLoading');
+
+            document.querySelector('.btn-lang').textContent = currentLang === 'zh' ? 'TH' : '中';
+
+            const playerInput = document.getElementById('current-player');
+            const currentVal = playerInput.value;
+            const prefix = currentLang === 'zh' ? '玩家' : 'คนที่';
+            if (currentVal.startsWith('玩家') || currentVal.startsWith('คนที่')) {
+                playerInput.value = prefix + ' ' + currentPlayerIndex;
+            }
+        }
+
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'th' : 'zh';
+            renderUI();
+            const activePage = document.querySelector('.page.active');
+            if (activePage) {
+                const pageId = activePage.id;
+                if (pageId === 'picker-page') {
+                    renderPickerFilters();
+                    refreshQuestionPicker();
+                } else if (pageId === 'browse-page') {
+                    renderBrowseFilters();
+                    renderBrowseList();
+                }
+            }
+        }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => {
@@ -430,13 +603,13 @@
         function startRoundRobin() {
             currentPlayerIndex = 1;
             usedQuestionsRR.clear();
-            document.getElementById('current-player').value = '玩家 1';
+            document.getElementById('current-player').value = (currentLang === 'zh' ? '玩家' : 'คนที่') + ' 1';
             resetRRUI();
             showPage('round-robin-page');
         }
 
         function resetRRUI() {
-            document.getElementById('rr-question-text').innerHTML = '点击下方按钮<br>抽取一个问题';
+            document.getElementById('rr-question-text').innerHTML = t('rrDrawPlaceholder');
             document.getElementById('rr-tags').style.display = 'none';
             document.getElementById('rr-draw-btn').style.display = 'block';
             document.getElementById('rr-actions').style.display = 'none';
@@ -459,11 +632,9 @@
                 currentQuestionRR = pool[Math.floor(Math.random() * pool.length)];
                 usedQuestionsRR.add(currentQuestionRR.id);
                 
-                document.getElementById('rr-question-text').textContent = currentQuestionRR.question;
+                document.getElementById('rr-question-text').textContent = qText(currentQuestionRR);
                 document.getElementById('rr-category-tag').textContent = currentQuestionRR.category;
-                document.getElementById('rr-level-tag').textContent = 
-                    currentQuestionRR.level === 'easy' ? '轻松' : 
-                    currentQuestionRR.level === 'medium' ? '趣味' : '深度';
+                document.getElementById('rr-level-tag').textContent = getLevelLabel(currentQuestionRR.level);
                 document.getElementById('rr-level-tag').className = 'tag tag-level-' + currentQuestionRR.level;
                 document.getElementById('rr-tags').style.display = 'block';
                 
@@ -476,7 +647,7 @@
 
         function nextPlayer() {
             currentPlayerIndex++;
-            document.getElementById('current-player').value = '玩家 ' + currentPlayerIndex;
+            document.getElementById('current-player').value = (currentLang === 'zh' ? '玩家' : 'คนที่') + ' ' + currentPlayerIndex;
             resetRRUI();
         }
 
@@ -488,7 +659,7 @@
         }
 
         function startPickerMode() {
-            pickerFilter = '全部';
+            pickerFilter = t('all');
             renderPickerFilters();
             refreshQuestionPicker();
             showPage('picker-page');
@@ -496,9 +667,11 @@
 
         function renderPickerFilters() {
             const container = document.getElementById('picker-filters');
-            container.innerHTML = categories.map(cat => 
-                `<button onclick="setPickerFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === pickerFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === pickerFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === pickerFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat}</button>`
-            ).join('');
+            const allLabel = t('all');
+            container.innerHTML = categories.map(cat => {
+                const displayCat = (currentLang === 'th' && cat === '中泰友谊') ? t('friendship') : cat;
+                return `<button onclick="setPickerFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === pickerFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === pickerFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === pickerFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat === '全部' ? allLabel : displayCat}</button>`;
+            }).join('');
         }
 
         function setPickerFilter(category) {
@@ -517,11 +690,9 @@
                     : questionDB.filter(q => q.category === pickerFilter);
                 currentQuestionPicker = pool[Math.floor(Math.random() * pool.length)];
                 
-                document.getElementById('picker-question-text').textContent = currentQuestionPicker.question;
+                document.getElementById('picker-question-text').textContent = qText(currentQuestionPicker);
                 document.getElementById('picker-category-tag').textContent = currentQuestionPicker.category;
-                document.getElementById('picker-level-tag').textContent = 
-                    currentQuestionPicker.level === 'easy' ? '轻松' : 
-                    currentQuestionPicker.level === 'medium' ? '趣味' : '深度';
+                document.getElementById('picker-level-tag').textContent = getLevelLabel(currentQuestionPicker.level);
                 document.getElementById('picker-level-tag').className = 'tag tag-level-' + currentQuestionPicker.level;
                 
                 card.classList.remove('animating');
@@ -529,9 +700,9 @@
         }
 
         function showPickerTarget() {
-            const name = prompt('请指定回答者名字（可选）:', '');
+            const name = prompt(t('pickerPrompt'), '');
             if (name && name.trim()) {
-                alert(`请 ${name.trim()} 回答这个问题！`);
+                alert(t('pickerAlert') + ' ' + name.trim() + ' ' + t('pickerAlert2'));
             }
         }
 
@@ -544,9 +715,11 @@
 
         function renderBrowseFilters() {
             const container = document.getElementById('browse-filters');
-            container.innerHTML = categories.map(cat => 
-                `<button onclick="setBrowseFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === browseFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === browseFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === browseFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat}</button>`
-            ).join('');
+            const allLabel = t('all');
+            container.innerHTML = categories.map(cat => {
+                const displayCat = (currentLang === 'th' && cat === '中泰友谊') ? t('friendship') : cat;
+                return `<button onclick="setBrowseFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === browseFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === browseFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === browseFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat === '全部' ? allLabel : displayCat}</button>`;
+            }).join('');
         }
 
         function setBrowseFilter(category) {
@@ -565,20 +738,20 @@
                 <div class="card" style="padding: 16px;">
                     <div style="margin-bottom: 8px;">
                         <span class="tag tag-category" style="font-size: 11px;">${q.category}</span>
-                        <span class="tag tag-level-${q.level}" style="font-size: 11px;">${q.level === 'easy' ? '轻松' : q.level === 'medium' ? '趣味' : '深度'}</span>
+                        <span class="tag tag-level-${q.level}" style="font-size: 11px;">${getLevelLabel(q.level)}</span>
                     </div>
-                    <div style="font-size: 15px; line-height: 1.5;">${q.question}</div>
+                    <div style="font-size: 15px; line-height: 1.5;">${qText(q)}</div>
                 </div>
             `).join('');
         }
 
         function shareGame() {
             const url = 'https://calvinfuchoco.github.io/icebreaker-game/';
-            const text = '🎉 来玩「破冰派对」！让陌生的朋友快速熟悉起来~';
+            const text = t('shareText');
             
             if (navigator.share) {
                 navigator.share({
-                    title: '破冰派对',
+                    title: t('shareTitle'),
                     text: text,
                     url: url
                 }).catch(() => {});
@@ -589,7 +762,7 @@
                 input.select();
                 document.execCommand('copy');
                 document.body.removeChild(input);
-                alert('链接已复制，快去分享给朋友吧！');
+                alert(t('shareCopied'));
             }
         }
     </script>
