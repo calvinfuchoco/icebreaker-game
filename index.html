@@ -119,28 +119,21 @@
             transform: scale(0.96);
         }
 
-        .btn-lang {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-secondary);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 14px;
+        .question-text {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #f5e6d3;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .question-th {
+            font-size: 16px;
+            color: var(--neon-cyan);
+            margin-top: 10px;
+            line-height: 1.5;
             font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: inherit;
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 100;
-            backdrop-filter: blur(10px);
         }
-
-        .btn-lang:active {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
         .card {
             background: var(--bg-card);
             backdrop-filter: blur(10px);
@@ -167,14 +160,6 @@
         .question-card.animating {
             transform: scale(0.8);
             filter: blur(4px);
-        }
-
-        .question-text {
-            font-size: 22px;
-            font-weight: 700;
-            line-height: 1.5;
-            color: #f5e6d3;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
 
         .tag {
@@ -226,8 +211,6 @@
     </style>
 </head>
 <body>
-    <button class="btn-lang" onclick="toggleLang()">TH</button>
-
     <!-- 首页 -->
     <div id="home-page" class="page active">
         <div class="container" style="justify-content: center;">
@@ -361,77 +344,6 @@
     </div>
 
     <script>
-        const i18n = {
-            zh: {
-                title: '破冰派对',
-                subtitle: '让陌生的朋友，快速熟悉起来',
-                rrMode: '轮流模式',
-                rrModeDesc: '轮流转盘抽题，抽到的人回答',
-                pickerMode: '出题模式',
-                pickerModeDesc: '你选问题，指定某人回答',
-                browse: '📚 浏览问题库',
-                share: '📤 分享给朋友',
-                rrPageTitle: '轮流模式',
-                rrCurrentLabel: '当前回答者',
-                rrDraw: '🎲 抽一个问题',
-                rrDrawPlaceholder: '点击下方按钮<br>抽取一个问题',
-                rrNext: '✓ 回答完毕，下一位',
-                rrSkip: '↷ 跳过，重抽',
-                pickerPageTitle: '出题模式',
-                pickerFilterLabel: '问题分类',
-                pickerChange: '🔄 换一题',
-                pickerTarget: '🎯 指定回答',
-                pickerLoading: '加载中...',
-                browsePageTitle: '问题库',
-                player: '玩家',
-                all: '全部',
-                easy: '轻松',
-                medium: '趣味',
-                hard: '深度',
-                shareTitle: '破冰派对',
-                shareText: '🎉 来玩「破冰派对」！让陌生的朋友快速熟悉起来~',
-                shareCopied: '链接已复制，快去分享给朋友吧！',
-                pickerPrompt: '请指定回答者名字（可选）:',
-                pickerAlert: '请',
-                pickerAlert2: '回答这个问题！',
-                friendship: '中泰友谊'
-            },
-            th: {
-                title: 'ปาร์ตี้ละลายน้ำแข็ง',
-                subtitle: 'ทำความรู้จักเพื่อนใหม่ให้เร็วขึ้น',
-                rrMode: 'โหมดหมุนเวียน',
-                rrModeDesc: 'สุ่มคำถาม ผลัดกันตอบ',
-                pickerMode: 'โหมดเลือกถาม',
-                pickerModeDesc: 'เลือกคำถาม 指定ใครตอบ',
-                browse: '📚 ดูคำถามทั้งหมด',
-                share: '📤 แชร์ให้เพื่อน',
-                rrPageTitle: 'โหมดหมุนเวียน',
-                rrCurrentLabel: 'ผู้ตอบปัจจุบัน',
-                rrDraw: '🎲 สุ่มคำถาม',
-                rrDrawPlaceholder: 'กดปุ่มด้านล่าง<br>เพื่อสุ่มคำถาม',
-                rrNext: '✓ ตอบแล้ว คนต่อไป',
-                rrSkip: '↷ ข้าม สุ่มใหม่',
-                pickerPageTitle: 'โหมดเลือกถาม',
-                pickerFilterLabel: 'หมวดหมู่คำถาม',
-                pickerChange: '🔄 เปลี่ยนคำถาม',
-                pickerTarget: '🎯 指定คนตอบ',
-                pickerLoading: 'กำลังโหลด...',
-                browsePageTitle: 'คลังคำถาม',
-                player: 'คนที่',
-                all: 'ทั้งหมด',
-                easy: 'ง่าย',
-                medium: 'สนุก',
-                hard: 'ลึกซึ้ง',
-                shareTitle: 'ปาร์ตี้ละลายน้ำแข็ง',
-                shareText: '🎉 มาเล่น「ปาร์ตี้ละลายน้ำแข็ง」กัน! ทำความรู้จักเพื่อนใหม่ให้เร็วขึ้น~',
-                shareCopied: 'คัดลอกลิงก์แล้ว แชร์ให้เพื่อนกันเลย!',
-                pickerPrompt: 'ใส่ชื่อผู้ตอบ (ไม่บังคับ):',
-                pickerAlert: 'เชิญ',
-                pickerAlert2: 'ตอบคำถามนี้!',
-                friendship: 'มิตรภาพจีน-ไทย'
-            }
-        };
-
         const categories = ["全部", "穿搭时尚", "宠物生活", "美食旅行", "社会潮流", "普鲁斯特问卷", "趣味脑洞", "中泰友谊"];
 
         const questionDB = [
@@ -520,7 +432,6 @@
             { id: 77, question_zh: "你觉得中泰友谊中最重要的是什么？", question_th: "คิดว่าอะไรสำคัญที่สุดในมิตรภาพจีน-ไทย?", category: "中泰友谊", level: "medium" }
         ];
 
-        let currentLang = 'zh';
         let currentPlayerIndex = 1;
         let currentQuestionRR = null;
         let usedQuestionsRR = new Set();
@@ -528,65 +439,13 @@
         let currentQuestionPicker = null;
         let browseFilter = '全部';
 
-        function t(key) {
-            return i18n[currentLang][key] || key;
-        }
-
-        function qText(item) {
-            return currentLang === 'zh' ? item.question_zh : item.question_th;
+        function bilingualHTML(item) {
+            return `<div class="question-text">${item.question_zh}</div><div class="question-th">${item.question_th}</div>`;
         }
 
         function getLevelLabel(level) {
-            const map = { easy: t('easy'), medium: t('medium'), hard: t('hard') };
+            const map = { easy: '轻松', medium: '趣味', hard: '深度' };
             return map[level] || level;
-        }
-
-        function renderUI() {
-            document.getElementById('title-text').textContent = t('title');
-            document.getElementById('subtitle-text').textContent = t('subtitle');
-            document.getElementById('rr-mode-text').textContent = t('rrMode');
-            document.getElementById('rr-mode-desc').textContent = t('rrModeDesc');
-            document.getElementById('picker-mode-text').textContent = t('pickerMode');
-            document.getElementById('picker-mode-desc').textContent = t('pickerModeDesc');
-            document.getElementById('browse-text').textContent = t('browse');
-            document.getElementById('share-text').textContent = t('share');
-            document.getElementById('rr-page-title').textContent = t('rrPageTitle');
-            document.getElementById('rr-current-label').textContent = t('rrCurrentLabel');
-            document.getElementById('rr-draw-text').textContent = t('rrDraw');
-            document.getElementById('rr-next-text').textContent = t('rrNext');
-            document.getElementById('rr-skip-text').textContent = t('rrSkip');
-            document.getElementById('picker-page-title').textContent = t('pickerPageTitle');
-            document.getElementById('picker-filter-label').textContent = t('pickerFilterLabel');
-            document.getElementById('picker-change-text').textContent = t('pickerChange');
-            document.getElementById('picker-target-text').textContent = t('pickerTarget');
-            document.getElementById('browse-page-title').textContent = t('browsePageTitle');
-            document.getElementById('rr-question-text').innerHTML = t('rrDrawPlaceholder');
-            document.getElementById('picker-question-text').textContent = t('pickerLoading');
-
-            document.querySelector('.btn-lang').textContent = currentLang === 'zh' ? 'TH' : '中';
-
-            const playerInput = document.getElementById('current-player');
-            const currentVal = playerInput.value;
-            const prefix = currentLang === 'zh' ? '玩家' : 'คนที่';
-            if (currentVal.startsWith('玩家') || currentVal.startsWith('คนที่')) {
-                playerInput.value = prefix + ' ' + currentPlayerIndex;
-            }
-        }
-
-        function toggleLang() {
-            currentLang = currentLang === 'zh' ? 'th' : 'zh';
-            renderUI();
-            const activePage = document.querySelector('.page.active');
-            if (activePage) {
-                const pageId = activePage.id;
-                if (pageId === 'picker-page') {
-                    renderPickerFilters();
-                    refreshQuestionPicker();
-                } else if (pageId === 'browse-page') {
-                    renderBrowseFilters();
-                    renderBrowseList();
-                }
-            }
         }
 
         function showPage(pageId) {
@@ -603,13 +462,13 @@
         function startRoundRobin() {
             currentPlayerIndex = 1;
             usedQuestionsRR.clear();
-            document.getElementById('current-player').value = (currentLang === 'zh' ? '玩家' : 'คนที่') + ' 1';
+            document.getElementById('current-player').value = '玩家 1';
             resetRRUI();
             showPage('round-robin-page');
         }
 
         function resetRRUI() {
-            document.getElementById('rr-question-text').innerHTML = t('rrDrawPlaceholder');
+            document.getElementById('rr-question-text').innerHTML = '<div class="question-text">点击下方按钮<br>抽取一个问题</div>';
             document.getElementById('rr-tags').style.display = 'none';
             document.getElementById('rr-draw-btn').style.display = 'block';
             document.getElementById('rr-actions').style.display = 'none';
@@ -632,7 +491,7 @@
                 currentQuestionRR = pool[Math.floor(Math.random() * pool.length)];
                 usedQuestionsRR.add(currentQuestionRR.id);
                 
-                document.getElementById('rr-question-text').textContent = qText(currentQuestionRR);
+                document.getElementById('rr-question-text').innerHTML = bilingualHTML(currentQuestionRR);
                 document.getElementById('rr-category-tag').textContent = currentQuestionRR.category;
                 document.getElementById('rr-level-tag').textContent = getLevelLabel(currentQuestionRR.level);
                 document.getElementById('rr-level-tag').className = 'tag tag-level-' + currentQuestionRR.level;
@@ -647,7 +506,7 @@
 
         function nextPlayer() {
             currentPlayerIndex++;
-            document.getElementById('current-player').value = (currentLang === 'zh' ? '玩家' : 'คนที่') + ' ' + currentPlayerIndex;
+            document.getElementById('current-player').value = '玩家 ' + currentPlayerIndex;
             resetRRUI();
         }
 
@@ -659,7 +518,7 @@
         }
 
         function startPickerMode() {
-            pickerFilter = t('all');
+            pickerFilter = '全部';
             renderPickerFilters();
             refreshQuestionPicker();
             showPage('picker-page');
@@ -667,11 +526,9 @@
 
         function renderPickerFilters() {
             const container = document.getElementById('picker-filters');
-            const allLabel = t('all');
-            container.innerHTML = categories.map(cat => {
-                const displayCat = (currentLang === 'th' && cat === '中泰友谊') ? t('friendship') : cat;
-                return `<button onclick="setPickerFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === pickerFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === pickerFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === pickerFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat === '全部' ? allLabel : displayCat}</button>`;
-            }).join('');
+            container.innerHTML = categories.map(cat => 
+                `<button onclick="setPickerFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === pickerFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === pickerFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === pickerFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat}</button>`
+            ).join('');
         }
 
         function setPickerFilter(category) {
@@ -690,7 +547,7 @@
                     : questionDB.filter(q => q.category === pickerFilter);
                 currentQuestionPicker = pool[Math.floor(Math.random() * pool.length)];
                 
-                document.getElementById('picker-question-text').textContent = qText(currentQuestionPicker);
+                document.getElementById('picker-question-text').innerHTML = bilingualHTML(currentQuestionPicker);
                 document.getElementById('picker-category-tag').textContent = currentQuestionPicker.category;
                 document.getElementById('picker-level-tag').textContent = getLevelLabel(currentQuestionPicker.level);
                 document.getElementById('picker-level-tag').className = 'tag tag-level-' + currentQuestionPicker.level;
@@ -700,9 +557,9 @@
         }
 
         function showPickerTarget() {
-            const name = prompt(t('pickerPrompt'), '');
+            const name = prompt('请指定回答者名字（可选）:', '');
             if (name && name.trim()) {
-                alert(t('pickerAlert') + ' ' + name.trim() + ' ' + t('pickerAlert2'));
+                alert('请 ' + name.trim() + ' 回答这个问题！');
             }
         }
 
@@ -715,11 +572,9 @@
 
         function renderBrowseFilters() {
             const container = document.getElementById('browse-filters');
-            const allLabel = t('all');
-            container.innerHTML = categories.map(cat => {
-                const displayCat = (currentLang === 'th' && cat === '中泰友谊') ? t('friendship') : cat;
-                return `<button onclick="setBrowseFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === browseFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === browseFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === browseFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat === '全部' ? allLabel : displayCat}</button>`;
-            }).join('');
+            container.innerHTML = categories.map(cat => 
+                `<button onclick="setBrowseFilter('${cat}')" style="padding: 6px 14px; border-radius: 20px; border: 1px solid ${cat === browseFilter ? 'var(--neon-cyan)' : 'rgba(255,255,255,0.2)'}; background: ${cat === browseFilter ? 'rgba(0,212,170,0.2)' : 'rgba(255,255,255,0.05)'}; color: ${cat === browseFilter ? 'var(--neon-cyan)' : 'var(--text-secondary)'}; font-size: 13px; cursor: pointer; transition: all 0.2s;">${cat}</button>`
+            ).join('');
         }
 
         function setBrowseFilter(category) {
@@ -740,18 +595,19 @@
                         <span class="tag tag-category" style="font-size: 11px;">${q.category}</span>
                         <span class="tag tag-level-${q.level}" style="font-size: 11px;">${getLevelLabel(q.level)}</span>
                     </div>
-                    <div style="font-size: 15px; line-height: 1.5;">${qText(q)}</div>
+                    <div style="font-size: 15px; line-height: 1.5; margin-bottom: 6px;">${q.question_zh}</div>
+                    <div style="font-size: 13px; color: var(--neon-cyan); line-height: 1.4;">${q.question_th}</div>
                 </div>
             `).join('');
         }
 
         function shareGame() {
             const url = 'https://calvinfuchoco.github.io/icebreaker-game/';
-            const text = t('shareText');
+            const text = '🎉 来玩「破冰派对」！让陌生的朋友快速熟悉起来~';
             
             if (navigator.share) {
                 navigator.share({
-                    title: t('shareTitle'),
+                    title: '破冰派对 | ปาร์ตี้ละลายน้ำแข็ง',
                     text: text,
                     url: url
                 }).catch(() => {});
@@ -762,7 +618,7 @@
                 input.select();
                 document.execCommand('copy');
                 document.body.removeChild(input);
-                alert(t('shareCopied'));
+                alert('链接已复制，快去分享给朋友吧！');
             }
         }
     </script>
