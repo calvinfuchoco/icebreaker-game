@@ -127,7 +127,7 @@
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
 
-        .question-th {
+        .question-en {
             font-size: 16px;
             color: var(--neon-cyan);
             margin-top: 10px;
@@ -347,89 +347,89 @@
         const categories = ["全部", "穿搭时尚", "宠物生活", "美食旅行", "社会潮流", "普鲁斯特问卷", "趣味脑洞", "中泰友谊"];
 
         const questionDB = [
-            { id: 1, question_zh: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", question_th: "ถ้าคุณใส่เสื้อผ้าสีเดียวไปตลอดชีวิต จะเลือกสีอะไร?", category: "穿搭时尚", level: "easy" },
-            { id: 2, question_zh: "你今天的穿搭灵感是什么？", question_th: "วันนี้คุณได้แรงบันดาลใจในการแต่งตัวมาจากอะไร?", category: "穿搭时尚", level: "easy" },
-            { id: 3, question_zh: "如果预算无限，你最想入手的一件单品是什么？", question_th: "ถ้าไม่มีจำกัดงบ อยากได้ไอเท็มชิ้นไหนมากที่สุด?", category: "穿搭时尚", level: "easy" },
-            { id: 4, question_zh: "你是什么风格？极简/街头/复古/甜美/运动？", question_th: "สไตล์คุณเป็นแนวไหน? มินิมอล/สตรีท/วินเทจ/หวาน/สปอร์ต?", category: "穿搭时尚", level: "easy" },
-            { id: 5, question_zh: "你买过最后悔的一件衣服是什么？", question_th: "เสื้อผ้าชิ้นไหนที่ซื้อมาแล้วเสียใจที่สุด?", category: "穿搭时尚", level: "medium" },
-            { id: 6, question_zh: "如果让你给今天的自己搭配一套衣服，你会怎么搭？", question_th: "ถ้าให้แต่งตัวให้ตัวเองวันนี้ จะแต่งยังไง?", category: "穿搭时尚", level: "easy" },
-            { id: 7, question_zh: "你觉得穿搭最重要的是什么？舒适/个性/品牌/潮流？", question_th: "คิดว่าการแต่งตัวสำคัญที่สุดอะไร? สบาย/บุคลิก/แบรนด์/เทรนด์?", category: "穿搭时尚", level: "medium" },
-            { id: 8, question_zh: "你有没有因为某件衣服被夸过？", question_th: "เคยถูกชมเพราะเสื้อผ้าชิ้นไหนบ้างไหม?", category: "穿搭时尚", level: "easy" },
-            { id: 9, question_zh: "如果要去一个荒岛，只能带三件衣服，你带什么？", question_th: "ถ้าต้องไปเกาะร้าง เอาเสื้อผ้าได้แค่ 3 ชิ้น จะเอาอะไร?", category: "穿搭时尚", level: "medium" },
-            { id: 10, question_zh: "你最喜欢的时尚博主或明星是谁？", question_th: "บล็อกเกอร์หรือดาราแฟชั่นคนโปรดคือใคร?", category: "穿搭时尚", level: "easy" },
+            { id: 1, question_zh: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", question_en: "If you could only wear one color of clothing for the rest of your life, which color would you choose?", category: "穿搭时尚", level: "easy" },
+            { id: 2, question_zh: "你今天的穿搭灵感是什么？", question_en: "What inspired your outfit today?", category: "穿搭时尚", level: "easy" },
+            { id: 3, question_zh: "如果预算无限，你最想入手的一件单品是什么？", question_en: "With an unlimited budget, what one fashion item would you buy?", category: "穿搭时尚", level: "easy" },
+            { id: 4, question_zh: "你是什么风格？极简/街头/复古/甜美/运动？", question_en: "What is your style? Minimalist / Streetwear / Vintage / Sweet / Sporty?", category: "穿搭时尚", level: "easy" },
+            { id: 5, question_zh: "你买过最后悔的一件衣服是什么？", question_en: "What piece of clothing do you regret buying the most?", category: "穿搭时尚", level: "medium" },
+            { id: 6, question_zh: "如果让你给今天的自己搭配一套衣服，你会怎么搭？", question_en: "If you had to style yourself today, what would you wear?", category: "穿搭时尚", level: "easy" },
+            { id: 7, question_zh: "你觉得穿搭最重要的是什么？舒适/个性/品牌/潮流？", question_en: "What matters most in fashion? Comfort / Personality / Brand / Trend?", category: "穿搭时尚", level: "medium" },
+            { id: 8, question_zh: "你有没有因为某件衣服被夸过？", question_en: "Have you ever been complimented on an outfit?", category: "穿搭时尚", level: "easy" },
+            { id: 9, question_zh: "如果要去一个荒岛，只能带三件衣服，你带什么？", question_en: "If you were going to a deserted island and could only bring three clothing items, what would they be?", category: "穿搭时尚", level: "medium" },
+            { id: 10, question_zh: "你最喜欢的时尚博主或明星是谁？", question_en: "Who is your favorite fashion blogger or celebrity?", category: "穿搭时尚", level: "easy" },
 
-            { id: 11, question_zh: "猫派还是狗派？为什么？", question_th: "ชอบแมวหรือหมา? ทำไม?", category: "宠物生活", level: "easy" },
-            { id: 12, question_zh: "如果你可以养任何动物当宠物（不限现实），你选什么？", question_th: "ถ้าเลี้ยงสัตว์อะไรก็ได้เป็นสัตว์เลี้ยง (ไม่จำกัดความเป็นจริง) จะเลือกอะไร?", category: "宠物生活", level: "medium" },
-            { id: 13, question_zh: "你宠物最搞笑的一个习惯是什么？（没养可以说理想的）", question_th: "นิสัยที่ตลกที่สุดของสัตว์เลี้ยงคุณคืออะไร?", category: "宠物生活", level: "easy" },
-            { id: 14, question_zh: "你觉得养宠物最大的挑战是什么？", question_th: "คิดว่าความท้าทายที่สุดของการเลี้ยงสัตว์คืออะไร?", category: "宠物生活", level: "medium" },
-            { id: 15, question_zh: "如果宠物会说话，你觉得它第一句会说什么？", question_th: "ถ้าสัตว์เลี้ยงพูดได้ คิดว่ามันจะพูดอะไรเป็นประโยคแรก?", category: "宠物生活", level: "medium" },
-            { id: 16, question_zh: "你更喜欢大型宠物还是小型宠物？", question_th: "ชอบสัตว์เลี้ยงตัวใหญ่หรือตัวเล็ก?", category: "宠物生活", level: "easy" },
-            { id: 17, question_zh: "如果让你变成一种动物，你想变成什么？", question_th: "ถ้าให้คุณกลายเป็นสัตว์สักชนิด อยากเป็นอะไร?", category: "宠物生活", level: "medium" },
-            { id: 18, question_zh: "你最喜欢去动物园看哪种动物？", question_th: "ชอบไปสวนสัตว์ดูสัตว์ชนิดไหนมากที่สุด?", category: "宠物生活", level: "easy" },
-            { id: 19, question_zh: "你觉得养宠物和养孩子哪个更难？", question_th: "คิดว่าเลี้ยงสัตว์กับเลี้ยงเด็ก อันไหนยากกว่ากัน?", category: "宠物生活", level: "hard" },
-            { id: 20, question_zh: "描述一下你理想中宠物的一天生活", question_th: "อธิบายชีวิตวันหนึ่งในอุดมคติของสัตว์เลี้ยงคุณ", category: "宠物生活", level: "medium" },
+            { id: 11, question_zh: "猫派还是狗派？为什么？", question_en: "Cat person or dog person? Why?", category: "宠物生活", level: "easy" },
+            { id: 12, question_zh: "如果你可以养任何动物当宠物（不限现实），你选什么？", question_en: "If you could have any animal as a pet (real or not), what would you choose?", category: "宠物生活", level: "medium" },
+            { id: 13, question_zh: "你宠物最搞笑的一个习惯是什么？（没养可以说理想的）", question_en: "What's the funniest habit your pet has? (Or dream pet's habit)", category: "宠物生活", level: "easy" },
+            { id: 14, question_zh: "你觉得养宠物最大的挑战是什么？", question_en: "What do you think is the biggest challenge of having a pet?", category: "宠物生活", level: "medium" },
+            { id: 15, question_zh: "如果宠物会说话，你觉得它第一句会说什么？", question_en: "If your pet could talk, what would its first words be?", category: "宠物生活", level: "medium" },
+            { id: 16, question_zh: "你更喜欢大型宠物还是小型宠物？", question_en: "Do you prefer large or small pets?", category: "宠物生活", level: "easy" },
+            { id: 17, question_zh: "如果让你变成一种动物，你想变成什么？", question_en: "If you could turn into an animal, which one would you choose?", category: "宠物生活", level: "medium" },
+            { id: 18, question_zh: "你最喜欢去动物园看哪种动物？", question_en: "What animal do you most enjoy seeing at the zoo?", category: "宠物生活", level: "easy" },
+            { id: 19, question_zh: "你觉得养宠物和养孩子哪个更难？", question_en: "Which do you think is harder: raising a pet or raising a child?", category: "宠物生活", level: "hard" },
+            { id: 20, question_zh: "描述一下你理想中宠物的一天生活", question_en: "Describe a perfect day in your pet's life", category: "宠物生活", level: "medium" },
 
-            { id: 21, question_zh: "你吃过最奇怪的食物是什么？", question_th: "อาหารที่แปลกที่สุดที่เคยทานคืออะไร?", category: "美食旅行", level: "easy" },
-            { id: 22, question_zh: "如果明天可以免费飞去任何地方吃顿饭，你去哪？", question_th: "ถ้าพรุ่งนี้บินฟรีไปกินข้าวที่ไหนก็ได้ จะไปที่ไหน?", category: "美食旅行", level: "medium" },
-            { id: 23, question_zh: "甜咸豆腐脑/汤圆，你站哪边？", question_th: "เต้าหู้หวานหรือเค็ม? ขนมจีบหวานหรือเค็ม? คุณอยู่ฝ่ายไหน?", category: "美食旅行", level: "easy" },
-            { id: 24, question_zh: "你最喜欢的家乡美食是什么？", question_th: "อาหาร家乡ที่ชอบที่สุดคืออะไร?", category: "美食旅行", level: "easy" },
-            { id: 25, question_zh: "如果只能吃一种料理一辈子，你选哪个？", question_th: "ถ้ากินอาหารประเภทเดียวไปตลอดชีวิต จะเลือกอะไร?", category: "美食旅行", level: "medium" },
-            { id: 26, question_zh: "你最想尝试但还没机会吃的美食是什么？", question_th: "อาหารอะไรที่อยากลองแต่ยังไม่มีโอกาส?", category: "美食旅行", level: "easy" },
-            { id: 27, question_zh: "如果让你推荐一家你城市最好吃的店，你推荐哪家？", question_th: "ถ้าให้推荐ร้านอาหารที่อร่อยที่สุดในเมืองคุณ จะ推荐ร้านไหน?", category: "美食旅行", level: "easy" },
-            { id: 28, question_zh: "你旅行时最看重什么？美食/风景/文化/购物？", question_th: "เวลาเที่ยวอะไรสำคัญที่สุด? อาหาร/วิว/문화/ช้อปปิ้ง?", category: "美食旅行", level: "medium" },
-            { id: 29, question_zh: "你最难忘的一次旅行经历是什么？", question_th: "ประสบการณ์เที่ยวที่น่าจดจำที่สุดคืออะไร?", category: "美食旅行", level: "medium" },
-            { id: 30, question_zh: "如果可以去世界上任何一个地方住一年，你选哪里？", question_th: "ถ้าไปอยู่ที่ไหนก็ได้ในโลกสักหนึ่งปี จะเลือกที่ไหน?", category: "美食旅行", level: "medium" },
-            { id: 31, question_zh: "你更喜欢海边还是山里？", question_th: "ชอบทะเลหรือภูเขามากกว่ากัน?", category: "美食旅行", level: "easy" },
-            { id: 32, question_zh: "旅行中你必带的三样东西是什么？", question_th: "เวลาเที่ยวต้องพก 3 สิ่งอะไรบ้าง?", category: "美食旅行", level: "easy" },
+            { id: 21, question_zh: "你吃过最奇怪的食物是什么？", question_en: "What's the strangest food you've ever eaten?", category: "美食旅行", level: "easy" },
+            { id: 22, question_zh: "如果明天可以免费飞去任何地方吃顿饭，你去哪？", question_en: "If you could fly anywhere for a free meal tomorrow, where would you go?", category: "美食旅行", level: "medium" },
+            { id: 23, question_zh: "甜咸豆腐脑/汤圆，你站哪边？", question_en: "Sweet or savory tofu pudding? Sweet or savory tangyuan? Which side are you on?", category: "美食旅行", level: "easy" },
+            { id: 24, question_zh: "你最喜欢的家乡美食是什么？", question_en: "What's your favorite hometown dish?", category: "美食旅行", level: "easy" },
+            { id: 25, question_zh: "如果只能吃一种料理一辈子，你选哪个？", question_en: "If you could only eat one type of cuisine for life, which would it be?", category: "美食旅行", level: "medium" },
+            { id: 26, question_zh: "你最想尝试但还没机会吃的美食是什么？", question_en: "What dish do you most want to try but haven't had the chance yet?", category: "美食旅行", level: "easy" },
+            { id: 27, question_zh: "如果让你推荐一家你城市最好吃的店，你推荐哪家？", question_en: "If someone asked you to recommend the best restaurant in your city, which one would it be?", category: "美食旅行", level: "easy" },
+            { id: 28, question_zh: "你旅行时最看重什么？美食/风景/文化/购物？", question_en: "What matters most when you travel? Food / Scenery / Culture / Shopping?", category: "美食旅行", level: "medium" },
+            { id: 29, question_zh: "你最难忘的一次旅行经历是什么？", question_en: "What's your most memorable travel experience?", category: "美食旅行", level: "medium" },
+            { id: 30, question_zh: "如果可以去世界上任何一个地方住一年，你选哪里？", question_en: "If you could live anywhere in the world for a year, where would you go?", category: "美食旅行", level: "medium" },
+            { id: 31, question_zh: "你更喜欢海边还是山里？", question_en: "Do you prefer the beach or the mountains?", category: "美食旅行", level: "easy" },
+            { id: 32, question_zh: "旅行中你必带的三样东西是什么？", question_en: "What are three things you always bring when traveling?", category: "美食旅行", level: "easy" },
 
-            { id: 33, question_zh: "最近有看什么剧/电影/综艺吗？推荐一部", question_th: "ช่วงนี้ดูซีรีส์/หนัง/รายการอะไรอยู่? แนะนำหน่อย", category: "社会潮流", level: "easy" },
-            { id: 34, question_zh: "如果只能留一个 App 在手机里，你留哪个？", question_th: "ถ้าเก็บแอปเดียวไว้ในมือถือ จะเก็บแอปไหน?", category: "社会潮流", level: "medium" },
-            { id: 35, question_zh: "你相信 AI 会取代你的工作吗？", question_th: "คุณเชื่อไหมว่า AI จะมาแทนที่งานของคุณ?", category: "社会潮流", level: "medium" },
-            { id: 36, question_zh: "你最近单曲循环的一首歌是什么？", question_th: "เพลงที่คุณฟังซ้ำๆ ช่วงนี้คือเพลงอะไร?", category: "社会潮流", level: "easy" },
-            { id: 37, question_zh: "如果穿越回十年前，你会对自己说什么？", question_th: "ถ้ากลับไปเมื่อสิบปีก่อน จะบอกอะไรกับตัวเอง?", category: "社会潮流", level: "medium" },
-            { id: 38, question_zh: "你觉得未来十年最大的变化会是什么？", question_th: "คิดว่าการเปลี่ยนแปลงที่ใหญ่ที่สุดในสิบปีข้างหน้าคืออะไร?", category: "社会潮流", level: "hard" },
-            { id: 39, question_zh: "你更喜欢线上社交还是线下见面？", question_th: "ชอบ社交ออนไลน์หรือเจอหน้ากันจริงๆ?", category: "社会潮流", level: "easy" },
-            { id: 40, question_zh: "如果有一百万，你会怎么花？", question_th: "ถ้ามีเงินล้าน จะใช้ยังไง?", category: "社会潮流", level: "medium" },
-            { id: 41, question_zh: "你觉得什么是现在年轻人最焦虑的事？", question_th: "คิดว่าอะไรคือสิ่งที่คนรุ่นใหม่กังวลมากที่สุด?", category: "社会潮流", level: "hard" },
-            { id: 42, question_zh: "你最近学到的一个新技能或知识是什么？", question_th: "ทักษะหรือความรู้ใหม่ที่เพิ่งเรียนเมื่อเร็วๆ นี้คืออะไร?", category: "社会潮流", level: "easy" },
+            { id: 33, question_zh: "最近有看什么剧/电影/综艺吗？推荐一部", question_en: "What show/movie/variety program have you been watching lately? Recommend one!", category: "社会潮流", level: "easy" },
+            { id: 34, question_zh: "如果只能留一个 App 在手机里，你留哪个？", question_en: "If you could only keep one app on your phone, which would it be?", category: "社会潮流", level: "medium" },
+            { id: 35, question_zh: "你相信 AI 会取代你的工作吗？", question_en: "Do you believe AI will replace your job?", category: "社会潮流", level: "medium" },
+            { id: 36, question_zh: "你最近单曲循环的一首歌是什么？", question_en: "What song have you been playing on repeat lately?", category: "社会潮流", level: "easy" },
+            { id: 37, question_zh: "如果穿越回十年前，你会对自己说什么？", question_en: "If you could go back ten years, what would you tell yourself?", category: "社会潮流", level: "medium" },
+            { id: 38, question_zh: "你觉得未来十年最大的变化会是什么？", question_en: "What do you think will be the biggest change in the next ten years?", category: "社会潮流", level: "hard" },
+            { id: 39, question_zh: "你更喜欢线上社交还是线下见面？", question_en: "Do you prefer socializing online or meeting in person?", category: "社会潮流", level: "easy" },
+            { id: 40, question_zh: "如果有一百万，你会怎么花？", question_en: "If you had a million dollars, how would you spend it?", category: "社会潮流", level: "medium" },
+            { id: 41, question_zh: "你觉得什么是现在年轻人最焦虑的事？", question_en: "What do you think is the biggest source of anxiety for young people today?", category: "社会潮流", level: "hard" },
+            { id: 42, question_zh: "你最近学到的一个新技能或知识是什么？", question_en: "What's a new skill or piece of knowledge you've recently learned?", category: "社会潮流", level: "easy" },
 
-            { id: 43, question_zh: "你最喜欢的品质是什么？（自己或他人）", question_th: "คุณภาพที่ชอบที่สุดคืออะไร? (ของตัวเองหรือคนอื่น)", category: "普鲁斯特问卷", level: "medium" },
-            { id: 44, question_zh: "你最痛恨自己的哪个特点？", question_th: "ลักษณะไหนของตัวเองที่เกลียดที่สุด?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 45, question_zh: "如果可以改变一件事，你最想改变什么？", question_th: "ถ้าเปลี่ยนอะไรได้สักอย่าง อยากเปลี่ยนอะไร?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 46, question_zh: "你最大的恐惧是什么？", question_th: "ความกลัวที่ใหญ่ที่สุดของคุณคืออะไร?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 47, question_zh: "你最理想的生活状态是什么样的？", question_th: "ชีวิตในอุดมคติของคุณเป็นยังไง?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 48, question_zh: "你觉得自己最大的优点是什么？", question_th: "คิดว่าจุดเด่นที่สุดของตัวเองคืออะไร?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 49, question_zh: "如果可以重来，你最想修正的一个决定是什么？", question_th: "ถ้าเริ่มใหม่ได้ การตัดสินใจไหนที่อยากแก้มากที่สุด?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 50, question_zh: "你觉得什么是真正的幸福？", question_th: "คิดว่าความสุขที่แท้จริงคืออะไร?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 51, question_zh: "你最珍惜的一段关系是什么？", question_th: "ความสัมพันธ์ไหนที่คุณหวงแหนที่สุด?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 52, question_zh: "如果可以拥有一种超能力，你选什么？为什么？", question_th: "ถ้ามีพลังวิเศษได้สักอย่าง จะเลือกอะไร? ทำไม?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 43, question_zh: "你最喜欢的品质是什么？（自己或他人）", question_en: "What quality do you value most? (In yourself or others)", category: "普鲁斯特问卷", level: "medium" },
+            { id: 44, question_zh: "你最痛恨自己的哪个特点？", question_en: "What trait do you most dislike about yourself?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 45, question_zh: "如果可以改变一件事，你最想改变什么？", question_en: "If you could change one thing, what would it be?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 46, question_zh: "你最大的恐惧是什么？", question_en: "What is your biggest fear?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 47, question_zh: "你最理想的生活状态是什么样的？", question_en: "What does your ideal life look like?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 48, question_zh: "你觉得自己最大的优点是什么？", question_en: "What do you think is your greatest strength?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 49, question_zh: "如果可以重来，你最想修正的一个决定是什么？", question_en: "If you could start over, what decision would you most want to correct?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 50, question_zh: "你觉得什么是真正的幸福？", question_en: "What do you think true happiness is?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 51, question_zh: "你最珍惜的一段关系是什么？", question_en: "What relationship do you treasure the most?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 52, question_zh: "如果可以拥有一种超能力，你选什么？为什么？", question_en: "If you could have a superpower, what would it be and why?", category: "普鲁斯特问卷", level: "medium" },
 
-            { id: 53, question_zh: "如果你有一种超能力，但必须付出一个代价，你选什么？", question_th: "ถ้ามีพลังวิเศษแต่ต้องแลกกับอะไรสักอย่าง จะเลือกอะไร?", category: "趣味脑洞", level: "medium" },
-            { id: 54, question_zh: "如果可以和任何历史人物吃顿饭，你选谁？", question_th: "ถ้ากินข้าวกับบุคคลในประวัติศาสตร์ได้ จะเลือกใคร?", category: "趣味脑洞", level: "medium" },
-            { id: 55, question_zh: "描述一下你理想中完美的一天", question_th: "อธิบายวันที่สมบูรณ์แบบในอุดมคติของคุณ", category: "趣味脑洞", level: "easy" },
-            { id: 56, question_zh: "如果你是一部电影的主角，会是什么类型的电影？", question_th: "ถ้าคุณเป็นพระเอกหนัง จะเป็นหนังประเภทไหน?", category: "趣味脑洞", level: "medium" },
-            { id: 57, question_zh: "如果明天醒来你变成了一种颜色，你希望是什么颜色？", question_th: "ถ้าพรุ่งนี้ตื่นมา变成เป็นสีสักสี อยากเป็นสีอะไร?", category: "趣味脑洞", level: "easy" },
-            { id: 58, question_zh: "你觉得你的灵魂动物是什么？", question_th: "คิดว่าสัตว์คู่ใจของคุณคืออะไร?", category: "趣味脑洞", level: "easy" },
-            { id: 59, question_zh: "如果可以和任何虚构角色做一天朋友，你选谁？", question_th: "ถ้าเป็นเพื่อนกับตัวละครในจินตนาการได้หนึ่งวัน จะเลือกใคร?", category: "趣味脑洞", level: "medium" },
-            { id: 60, question_zh: "你觉得十年后的自己会在做什么？", question_th: "คิดว่าอีกสิบปีข้างหน้าตัวเองจะทำอะไร?", category: "趣味脑洞", level: "medium" },
-            { id: 61, question_zh: "如果世界上只剩最后一顿饭，你想吃什么？", question_th: "ถ้าโลกนี้เหลืออาหารมื้อสุดท้าย อยากกินอะไร?", category: "趣味脑洞", level: "easy" },
-            { id: 62, question_zh: "你觉得外星人存在吗？如果存在，它们长什么样？", question_th: "คิดว่ามนุษย์ต่างดาวมีจริงไหม? ถ้ามี หน้าตาเป็นยังไง?", category: "趣味脑洞", level: "easy" },
+            { id: 53, question_zh: "如果你有一种超能力，但必须付出一个代价，你选什么？", question_en: "If you could have a superpower but had to pay a price, what would you choose?", category: "趣味脑洞", level: "medium" },
+            { id: 54, question_zh: "如果可以和任何历史人物吃顿饭，你选谁？", question_en: "If you could have dinner with any historical figure, who would you choose?", category: "趣味脑洞", level: "medium" },
+            { id: 55, question_zh: "描述一下你理想中完美的一天", question_en: "Describe your perfect day", category: "趣味脑洞", level: "easy" },
+            { id: 56, question_zh: "如果你是一部电影的主角，会是什么类型的电影？", question_en: "If you were the main character of a movie, what genre would it be?", category: "趣味脑洞", level: "medium" },
+            { id: 57, question_zh: "如果明天醒来你变成了一种颜色，你希望是什么颜色？", question_en: "If you woke up tomorrow as a color, which color would you want to be?", category: "趣味脑洞", level: "easy" },
+            { id: 58, question_zh: "你觉得你的灵魂动物是什么？", question_en: "What do you think your spirit animal is?", category: "趣味脑洞", level: "easy" },
+            { id: 59, question_zh: "如果可以和任何虚构角色做一天朋友，你选谁？", question_en: "If you could be friends with any fictional character for a day, who would you choose?", category: "趣味脑洞", level: "medium" },
+            { id: 60, question_zh: "你觉得十年后的自己会在做什么？", question_en: "What do you think you'll be doing ten years from now?", category: "趣味脑洞", level: "medium" },
+            { id: 61, question_zh: "如果世界上只剩最后一顿饭，你想吃什么？", question_en: "If the world had only one last meal, what would you want to eat?", category: "趣味脑洞", level: "easy" },
+            { id: 62, question_zh: "你觉得外星人存在吗？如果存在，它们长什么样？", question_en: "Do you believe aliens exist? If so, what do they look like?", category: "趣味脑洞", level: "easy" },
 
-            { id: 63, question_zh: "你去过泰国吗？最想推荐给泰国朋友的一道中国菜是什么？", question_th: "คุณเคยไปไทยไหม? อาหารจีนจานไหนที่อยากแนะนำให้เพื่อนไทย?", category: "中泰友谊", level: "easy" },
-            { id: 64, question_zh: "你想学的一句泰语是什么？或者你会的第一个泰语词是什么？", question_th: "อยากเรียนภาษาไทยคำไหน? หรือคำไทยคำแรกที่คุณรู้คืออะไร?", category: "中泰友谊", level: "easy" },
-            { id: 65, question_zh: "你觉得中国人最像泰国人的一个特点是什么？", question_th: "คิดว่าลักษณะไหนที่คนจีนคล้ายคนไทยมากที่สุด?", category: "中泰友谊", level: "medium" },
-            { id: 66, question_zh: "如果让你给泰国朋友推荐一个中国城市去旅行，你推荐哪里？", question_th: "ถ้าให้แนะนำเมืองจีนให้เพื่อนไทย去เที่ยว จะ推荐เมืองไหน?", category: "中泰友谊", level: "medium" },
-            { id: 67, question_zh: "火锅 VS 冬阴功，你更喜欢哪个？为什么？", question_th: "หม้อไฟ VS ต้มยำกุ้ง ชอบอันไหนมากกว่า? ทำไม?", category: "中泰友谊", level: "easy" },
-            { id: 68, question_zh: "你知道哪些泰国明星或演员？最喜欢谁？", question_th: "รู้จักดาราหรือนักแสดงไทยคนไหน? ชอบใครมากที่สุด?", category: "中泰友谊", level: "easy" },
-            { id: 69, question_zh: "如果让你用一个词形容泰国人，你会用什么词？", question_th: "ถ้าให้ใช้คำเดียว描述คนไทย จะใช้คำว่าอะไร?", category: "中泰友谊", level: "medium" },
-            { id: 70, question_zh: "你觉得中泰两国最相似的文化习俗是什么？", question_th: "คิดว่าประเพณีที่คล้ายกันที่สุดระหว่างจีนกับไทยคืออะไร?", category: "中泰友谊", level: "medium" },
-            { id: 71, question_zh: "你最喜欢的泰国美食是什么？或者最想尝试什么？", question_th: "อาหารไทยที่ชอบที่สุดคืออะไร? หรืออยากลองอะไร?", category: "中泰友谊", level: "easy" },
-            { id: 72, question_zh: "如果中泰合拍一部电影，你希望是谁主演、什么题材？", question_th: "ถ้าจีน-ไทยทำหนังร่วมกัน อยากให้ใครแสดงและแนวอะไร?", category: "中泰友谊", level: "medium" },
-            { id: 73, question_zh: "泰国和中国最大的文化差异你觉得是什么？", question_th: "ความแตกต่างทางวัฒนธรรมที่ใหญ่ที่สุดระหว่างไทยกับจีนคืออะไร?", category: "中泰友谊", level: "hard" },
-            { id: 74, question_zh: "如果让你教泰国朋友一句中文，你教什么？", question_th: "ถ้าให้สอนภาษาจีนให้เพื่อนไทยหนึ่งประโยค จะสอนอะไร?", category: "中泰友谊", level: "easy" },
-            { id: 75, question_zh: "你觉得泰国人最热爱什么活动？", question_th: "คิดว่าคนไทยชอบทำกิจกรรมอะไรมากที่สุด?", category: "中泰友谊", level: "easy" },
-            { id: 76, question_zh: "如果你去泰国开一家店，你会开什么类型的店？", question_th: "ถ้าไปเปิดร้านที่ไทย จะเปิดร้านประเภทไหน?", category: "中泰友谊", level: "medium" },
-            { id: 77, question_zh: "你觉得中泰友谊中最重要的是什么？", question_th: "คิดว่าอะไรสำคัญที่สุดในมิตรภาพจีน-ไทย?", category: "中泰友谊", level: "medium" }
+            { id: 63, question_zh: "你去过泰国吗？最想推荐给泰国朋友的一道中国菜是什么？", question_en: "Have you been to Thailand? What Chinese dish would you most recommend to a Thai friend?", category: "中泰友谊", level: "easy" },
+            { id: 64, question_zh: "你想学的一句泰语是什么？或者你会的第一个泰语词是什么？", question_en: "What Thai phrase would you like to learn? Or what was your first Thai word?", category: "中泰友谊", level: "easy" },
+            { id: 65, question_zh: "你觉得中国人最像泰国人的一个特点是什么？", question_en: "What trait do you think Chinese people share most with Thai people?", category: "中泰友谊", level: "medium" },
+            { id: 66, question_zh: "如果让你给泰国朋友推荐一个中国城市去旅行，你推荐哪里？", question_en: "If you had to recommend one Chinese city for a Thai friend to visit, where would it be?", category: "中泰友谊", level: "medium" },
+            { id: 67, question_zh: "火锅 VS 冬阴功，你更喜欢哪个？为什么？", question_en: "Hotpot vs Tom Yum Kung - which do you prefer and why?", category: "中泰友谊", level: "easy" },
+            { id: 68, question_zh: "你知道哪些泰国明星或演员？最喜欢谁？", question_en: "Which Thai celebrities or actors do you know? Who's your favorite?", category: "中泰友谊", level: "easy" },
+            { id: 69, question_zh: "如果让你用一个词形容泰国人，你会用什么词？", question_en: "If you could describe Thai people in one word, what would it be?", category: "中泰友谊", level: "medium" },
+            { id: 70, question_zh: "你觉得中泰两国最相似的文化习俗是什么？", question_en: "What cultural tradition do you think China and Thailand have most in common?", category: "中泰友谊", level: "medium" },
+            { id: 71, question_zh: "你最喜欢的泰国美食是什么？或者最想尝试什么？", question_en: "What's your favorite Thai dish? Or what would you most like to try?", category: "中泰友谊", level: "easy" },
+            { id: 72, question_zh: "如果中泰合拍一部电影，你希望是谁主演、什么题材？", question_en: "If China and Thailand co-produced a movie, who would star and what genre?", category: "中泰友谊", level: "medium" },
+            { id: 73, question_zh: "泰国和中国最大的文化差异你觉得是什么？", question_en: "What do you think is the biggest cultural difference between Thailand and China?", category: "中泰友谊", level: "hard" },
+            { id: 74, question_zh: "如果让你教泰国朋友一句中文，你教什么？", question_en: "If you had to teach a Thai friend one Chinese phrase, what would it be?", category: "中泰友谊", level: "easy" },
+            { id: 75, question_zh: "你觉得泰国人最热爱什么活动？", question_en: "What activity do you think Thai people enjoy the most?", category: "中泰友谊", level: "easy" },
+            { id: 76, question_zh: "如果你去泰国开一家店，你会开什么类型的店？", question_en: "If you opened a shop in Thailand, what kind of shop would it be?", category: "中泰友谊", level: "medium" },
+            { id: 77, question_zh: "你觉得中泰友谊中最重要的是什么？", question_en: "What do you think matters most in China-Thailand friendship?", category: "中泰友谊", level: "medium" }
         ];
 
         let currentPlayerIndex = 1;
@@ -440,7 +440,7 @@
         let browseFilter = '全部';
 
         function bilingualHTML(item) {
-            return `<div class="question-text">${item.question_zh}</div><div class="question-th">${item.question_th}</div>`;
+            return `<div class="question-text">${item.question_zh}</div><div class="question-en">${item.question_en}</div>`;
         }
 
         function getLevelLabel(level) {
@@ -596,7 +596,7 @@
                         <span class="tag tag-level-${q.level}" style="font-size: 11px;">${getLevelLabel(q.level)}</span>
                     </div>
                     <div style="font-size: 15px; line-height: 1.5; margin-bottom: 6px;">${q.question_zh}</div>
-                    <div style="font-size: 13px; color: var(--neon-cyan); line-height: 1.4;">${q.question_th}</div>
+                     <div style="font-size: 13px; color: var(--neon-cyan); line-height: 1.4;">${q.question_en}</div>
                 </div>
             `).join('');
         }
