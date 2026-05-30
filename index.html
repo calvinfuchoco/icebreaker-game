@@ -208,6 +208,31 @@
             cursor: pointer;
             padding: 8px;
         }
+
+        .twist-box {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(240, 192, 96, 0.08);
+            border-left: 3px solid #f0c060;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.5;
+        }
+        .twist-text {
+            font-size: 15px;
+            color: #f0c060;
+            font-weight: 500;
+        }
+        .twist-en {
+            font-size: 13px;
+            color: var(--neon-cyan);
+            margin-top: 4px;
+        }
+
+        .shuffle-btn-active {
+            border-color: var(--neon-pink) !important;
+            color: var(--neon-pink) !important;
+            background: rgba(255, 107, 157, 0.15) !important;
+        }
     </style>
 </head>
 <body>
@@ -337,6 +362,10 @@
             
             <div style="margin-bottom: 16px;">
                 <div id="browse-filters" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+                <div style="margin-top: 10px; display: flex; gap: 8px; align-items: center;">
+                    <button id="shuffle-btn" onclick="toggleBrowseRandom()" style="background: none; border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary); font-size: 12px; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">🔀 顺序排列</button>
+                    <span id="shuffle-status" style="font-size: 11px; color: var(--text-secondary);"></span>
+                </div>
             </div>
             
             <div id="browse-list" style="display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1;"></div>
@@ -347,24 +376,24 @@
         const categories = ["全部", "穿搭时尚", "宠物生活", "美食旅行", "社会潮流", "普鲁斯特问卷", "趣味脑洞"];
 
         const questionDB = [
-            { id: 1, question_zh: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", question_en: "If you could only wear one color of clothing for the rest of your life, which would you choose?", category: "穿搭时尚", level: "easy" },
+            { id: 1, question_zh: "如果你只能穿一种颜色的衣服过一辈子，你会选什么颜色？", question_en: "If you could only wear one color of clothing for the rest of your life, which would you choose?", category: "穿搭时尚", level: "easy", twist_zh: "冷知识：颜色心理学中，你偏好的颜色能透露性格——蓝色偏爱者通常理性冷静，红色偏爱者热情大胆。你的选择暴露了你吗？", twist_en: "Color psychology says your favorite color reveals your personality — blue lovers are rational, red lovers are passionate. Does that fit you?" },
             { id: 2, question_zh: "你今天的穿搭灵感是什么？", question_en: "What inspired your outfit today?", category: "穿搭时尚", level: "easy" },
             { id: 3, question_zh: "如果预算无限，你最想入手的一件单品是什么？", question_en: "With unlimited budget, what one fashion item would you buy?", category: "穿搭时尚", level: "easy" },
-            { id: 4, question_zh: "你是什么风格？极简/街头/复古/甜美/运动？", question_en: "What is your style? Minimalist / Streetwear / Vintage / Sweet / Sporty?", category: "穿搭时尚", level: "easy" },
+            { id: 4, question_zh: "你是什么风格？极简/街头/复古/甜美/运动？", question_en: "What is your style? Minimalist / Streetwear / Vintage / Sweet / Sporty?", category: "穿搭时尚", level: "easy", twist_zh: "有趣发现：一个人的穿搭风格往往和职业性格高度相关——极简者看重效率，复古者念旧，街头者追求自由表达。你是哪一种？", twist_en: "Your style is linked to your personality — minimalists value efficiency, vintage lovers are nostalgic, streetwear fans value free expression. Which are you?" },
             { id: 5, question_zh: "你觉得穿搭最重要的是什么？舒适/个性/品牌/潮流？", question_en: "What matters most in fashion? Comfort / Personality / Brand / Trend?", category: "穿搭时尚", level: "medium" },
-            { id: 6, question_zh: "如果要去一个荒岛，只能带三件衣服，你带什么？", question_en: "If you went to a deserted island with only 3 clothing items, what would they be?", category: "穿搭时尚", level: "medium" },
+            { id: 6, question_zh: "如果要去一个荒岛，只能带三件衣服，你带什么？", question_en: "If you went to a deserted island with only 3 clothing items, what would they be?", category: "穿搭时尚", level: "medium", twist_zh: "反转思考：如果你真的去了荒岛，最大的问题不是穿什么，而是怎么生存。你的选择暴露了你更在意实用还是体面。", twist_en: "On a real deserted island, survival matters more than fashion. Your choice shows whether you prioritize practicality or dignity." },
             { id: 7, question_zh: "你最不能接受的穿搭雷区是什么？", question_en: "What's your biggest fashion pet peeve?", category: "穿搭时尚", level: "medium" },
             { id: 8, question_zh: "你最想尝试但还没尝试过的穿搭风格是什么？", question_en: "What style have you always wanted to try but haven't yet?", category: "穿搭时尚", level: "medium" },
-            { id: 9, question_zh: "你觉得男生/女生最加分的单品是什么？", question_en: "What's the most flattering item of clothing for men or women?", category: "穿搭时尚", level: "medium" },
+            { id: 9, question_zh: "你觉得男生/女生最加分的单品是什么？", question_en: "What's the most flattering item of clothing for men or women?", category: "穿搭时尚", level: "medium", twist_zh: "冷知识：调查显示，一件合身的白衬衫和一条干净的牛仔裤，是男女公认最加分的搭配。简单才是最高级的时尚。", twist_en: "A well-fitted white shirt and clean jeans are voted the most flattering outfit for both men and women. Simplicity is the ultimate sophistication." },
             { id: 10, question_zh: "你买衣服最看重什么？材质/版型/颜色/价格？", question_en: "What matters most when buying clothes? Fabric / Fit / Color / Price?", category: "穿搭时尚", level: "easy" },
             { id: 11, question_zh: "你有没有一件穿了很久舍不得扔的衣服？", question_en: "Do you have a piece of clothing you've kept for years and can't bear to throw away?", category: "穿搭时尚", level: "medium" },
-            { id: 12, question_zh: "如果今天是你人生最后一天，你会穿什么？", question_en: "If today were your last day, what would you wear?", category: "穿搭时尚", level: "hard" },
+            { id: 12, question_zh: "如果今天是你人生最后一天，你会穿什么？", question_en: "If today were your last day, what would you wear?", category: "穿搭时尚", level: "hard", twist_zh: "反转：如果真的只剩最后一天，穿什么其实不重要——但这反而能让你看清自己最真实的表达方式是什么。", twist_en: "On your last day, what you wear doesn't really matter — but it reveals your most authentic form of self-expression." },
 
-            { id: 13, question_zh: "猫派还是狗派？为什么？", question_en: "Cat person or dog person? Why?", category: "宠物生活", level: "easy" },
+            { id: 13, question_zh: "猫派还是狗派？为什么？", question_en: "Cat person or dog person? Why?", category: "宠物生活", level: "easy", twist_zh: "冷知识：研究发现，狗派普遍更外向活跃、更听从规则；猫派更敏感独立、更有创造力。你的选择可能悄悄说明了你的性格！", twist_en: "Studies show dog people tend to be more outgoing and rule-following, while cat people are more sensitive, independent and creative. Does that match you?" },
             { id: 14, question_zh: "如果你可以养任何动物当宠物（不限现实），你选什么？", question_en: "If you could have any animal as a pet (real or mythical), what would you choose?", category: "宠物生活", level: "medium" },
             { id: 15, question_zh: "你宠物最搞笑的一个习惯是什么？（没养可以说理想的）", question_en: "What's the funniest habit your pet has? (Or dream pet's habit)", category: "宠物生活", level: "easy" },
             { id: 16, question_zh: "如果宠物会说话，你觉得它第一句会说什么？", question_en: "If your pet could talk, what would its first words be?", category: "宠物生活", level: "medium" },
-            { id: 17, question_zh: "如果让你变成一种动物，你想变成什么？", question_en: "If you could turn into an animal, which would you choose?", category: "宠物生活", level: "medium" },
+            { id: 17, question_zh: "如果让你变成一种动物，你想变成什么？", question_en: "If you could turn into an animal, which would you choose?", category: "宠物生活", level: "medium", twist_zh: "有趣的视角：你想变成的动物往往反映你内心渴望的特质——选鹰的人向往自由，选海豚的人渴望快乐，选猫的人喜欢独立。", twist_en: "The animal you choose reflects what you value — eagles symbolize freedom, dolphins represent joy, cats embody independence." },
             { id: 18, question_zh: "你觉得养宠物和养孩子哪个更难？", question_en: "Which do you think is harder: raising a pet or raising a child?", category: "宠物生活", level: "hard" },
             { id: 19, question_zh: "你见过最特别的宠物是什么？", question_en: "What's the most unusual pet you've ever seen?", category: "宠物生活", level: "easy" },
             { id: 20, question_zh: "如果你是一只猫/狗，你想过什么样的生活？", question_en: "If you were a cat or dog, what kind of life would you want?", category: "宠物生活", level: "medium" },
@@ -373,10 +402,10 @@
             { id: 23, question_zh: "你愿意花多少钱在宠物身上？", question_en: "How much would you be willing to spend on a pet?", category: "宠物生活", level: "medium" },
             { id: 24, question_zh: "如果有宠物学校，你最想让你的宠物学什么？", question_en: "If there were a pet school, what would you most want your pet to learn?", category: "宠物生活", level: "medium" },
 
-            { id: 25, question_zh: "你吃过最奇怪的食物是什么？", question_en: "What's the strangest food you've ever eaten?", category: "美食旅行", level: "easy" },
+            { id: 25, question_zh: "你吃过最奇怪的食物是什么？", question_en: "What's the strangest food you've ever eaten?", category: "美食旅行", level: "easy", twist_zh: "冷知识：你吃过最奇怪的食物往往能反映你的冒险精神。敢尝试奇怪食物的人，通常更愿意接受新事物和新文化。", twist_en: "The strangest food you've eaten reflects your adventurous spirit. People who try unusual foods are generally more open to new experiences." },
             { id: 26, question_zh: "如果明天可以免费飞去任何地方吃顿饭，你去哪？", question_en: "If you could fly anywhere for a free meal tomorrow, where would you go?", category: "美食旅行", level: "medium" },
-            { id: 27, question_zh: "甜咸豆腐脑/汤圆，你站哪边？", question_en: "Sweet or savory tofu pudding? Which side are you on?", category: "美食旅行", level: "easy" },
-            { id: 28, question_zh: "如果只能吃一种料理一辈子，你选哪个？", question_en: "If you could only eat one cuisine for life, which would it be?", category: "美食旅行", level: "medium" },
+            { id: 27, question_zh: "甜咸豆腐脑/汤圆，你站哪边？", question_en: "Sweet or savory tofu pudding? Which side are you on?", category: "美食旅行", level: "easy", twist_zh: "冷知识：这场甜咸之争其实和地理有关——南方盛产糖，北方依赖盐。你的口味可能悄悄暴露了你的成长环境！", twist_en: "This sweet vs savory debate is rooted in geography — southern China grows sugar, northern China relies on salt. Your taste might reveal where you grew up!" },
+            { id: 28, question_zh: "如果只能吃一种料理一辈子，你选哪个？", question_en: "If you could only eat one cuisine for life, which would it be?", category: "美食旅行", level: "medium", twist_zh: "有趣发现：大多数人第一反应选的是自己国家的家常菜——说明胃是最诚实的乡愁。你的答案是什么？", twist_en: "Most people instinctively choose their home cuisine — proving that the stomach is the most honest carrier of nostalgia." },
             { id: 29, question_zh: "你旅行时最看重什么？美食/风景/文化/购物？", question_en: "What matters most when you travel? Food / Scenery / Culture / Shopping?", category: "美食旅行", level: "medium" },
             { id: 30, question_zh: "如果可以去世界上任何一个地方住一年，你选哪里？", question_en: "If you could live anywhere in the world for a year, where would you go?", category: "美食旅行", level: "medium" },
             { id: 31, question_zh: "你记忆中最美味的一顿饭是在哪里吃的？", question_en: "Where did you have the most memorable meal of your life?", category: "美食旅行", level: "easy" },
@@ -386,92 +415,91 @@
             { id: 35, question_zh: "你觉得哪座城市的美食最让你念念不忘？", question_en: "Which city's food do you still crave?", category: "美食旅行", level: "easy" },
             { id: 36, question_zh: "你更喜欢一个人的旅行还是一群人的旅行？", question_en: "Do you prefer traveling alone or with a group?", category: "美食旅行", level: "easy" },
 
-            { id: 37, question_zh: "最近有看什么剧/电影/综艺吗？推荐一部", question_en: "What show/movie/variety have you been watching? Recommend one!", category: "社会潮流", level: "easy" },
-            { id: 38, question_zh: "如果只能留一个 App 在手机里，你留哪个？", question_en: "If you could only keep one app on your phone, which would it be?", category: "社会潮流", level: "medium" },
-            { id: 39, question_zh: "你相信 AI 会取代你的工作吗？", question_en: "Do you believe AI will replace your job?", category: "社会潮流", level: "medium" },
+            { id: 37, question_zh: "最近有看什么剧/电影/综艺吗？推荐一部", question_en: "What show/movie/variety have you been watching? Recommend one!", category: "社会潮流", level: "easy", twist_zh: "小洞察：一个人推荐的作品类型能透露性格——爱喜剧=快乐至上，爱纪录片=求知欲强，爱悬疑=喜欢动脑思考。你属于哪类？", twist_en: "The genre you recommend reveals your personality — comedy lovers seek joy, documentary fans are curious, mystery lovers enjoy thinking." },
+            { id: 38, question_zh: "如果只能留一个 App 在手机里，你留哪个？", question_en: "If you could only keep one app on your phone, which would it be?", category: "社会潮流", level: "medium", twist_zh: "反转：你留的App可能是你最离不开的东西——是社交、工具还是娱乐？这暴露了你最核心的生活需求。", twist_en: "The one app you keep reveals your core life need — is it social connection, productivity, or entertainment?" },
+            { id: 39, question_zh: "你相信 AI 会取代你的工作吗？", question_en: "Do you believe AI will replace your job?", category: "社会潮流", level: "medium", twist_zh: "冷知识：历史上每一次技术革命都消灭了一些岗位，也创造了更多新岗位。关键不是会不会被取代，而是你是否在持续学习。", twist_en: "Every tech revolution in history eliminated some jobs but created more. The key isn't being replaced — it's whether you keep learning." },
             { id: 40, question_zh: "如果穿越回十年前，你会对自己说什么？", question_en: "If you could go back 10 years, what would you tell yourself?", category: "社会潮流", level: "medium" },
             { id: 41, question_zh: "你觉得未来十年最大的变化会是什么？", question_en: "What do you think will be the biggest change in the next 10 years?", category: "社会潮流", level: "hard" },
             { id: 42, question_zh: "你觉得什么是现在年轻人最焦虑的事？", question_en: "What's the biggest source of anxiety for young people today?", category: "社会潮流", level: "hard" },
             { id: 43, question_zh: "你最近在社交媒体上关注了什么有趣的话题？", question_en: "What interesting topic have you been following on social media lately?", category: "社会潮流", level: "easy" },
             { id: 44, question_zh: "你觉得社交媒体对你的生活有什么影响？", question_en: "What impact does social media have on your life?", category: "社会潮流", level: "medium" },
-            { id: 45, question_zh: "你赞成还是反对'躺平'？为什么？", question_en: "Are you for or against 'lying flat'? Why?", category: "社会潮流", level: "hard" },
+            { id: 45, question_zh: "你赞成还是反对'躺平'？为什么？", question_en: "Are you for or against 'lying flat'? Why?", category: "社会潮流", level: "hard", twist_zh: "思考：'躺平'背后其实是年轻人对'过度内卷'的回应。你的立场或许反映了你如何看待努力与回报之间的关系。", twist_en: "'Lying flat' is a response to excessive social competition. Your stance reflects how you view the relationship between effort and reward." },
             { id: 46, question_zh: "你觉得现在的教育方式需要改变吗？", question_en: "Do you think the current education system needs to change?", category: "社会潮流", level: "hard" },
             { id: 47, question_zh: "你更喜欢线上社交还是线下社交？", question_en: "Do you prefer online socializing or offline?", category: "社会潮流", level: "medium" },
-            { id: 48, question_zh: "你觉得当代社会最缺乏的是什么？", question_en: "What do you think contemporary society lacks the most?", category: "社会潮流", level: "hard" },
-
-            { id: 49, question_zh: "如果你有一种超能力，但必须付出一个代价，你选什么？", question_en: "If you had a superpower but had to pay a price, what would you choose?", category: "趣味脑洞", level: "medium" },
-            { id: 50, question_zh: "如果可以和任何历史人物吃顿饭，你选谁？", question_en: "If you could dine with any historical figure, who would you choose?", category: "趣味脑洞", level: "medium" },
+            { id: 48, question_zh: "你觉得当代社会最缺乏的是什么？", question_en: "What do you think contemporary society lacks the most?", category: "社会潮流", level: "hard", twist_zh: "反思：你觉得社会缺乏什么，往往意味着你内心最在意什么——信任、温暖、公平、还是自由？", twist_en: "What you think society lacks often reveals what you value most — trust, warmth, justice, or freedom." },
+            { id: 49, question_zh: "如果你有一种超能力，但必须付出一个代价，你选什么？", question_en: "If you had a superpower but had to pay a price, what would you choose?", category: "趣味脑洞", level: "medium", twist_zh: "反转：你愿意付出的代价，往往比超能力本身更能说明你的价值观。你愿意牺牲什么换取什么？", twist_en: "The price you're willing to pay says more about your values than the superpower itself. What would you sacrifice for what?" },
+            { id: 50, question_zh: "如果可以和任何历史人物吃顿饭，你选谁？", question_en: "If you could dine with any historical figure, who would you choose?", category: "趣味脑洞", level: "medium", twist_zh: "有趣选择：你想见的人，可能是你想成为的人，也可能是你最想解开的心结。这本身就在说你的故事。", twist_en: "Who you choose to meet reflects who you want to become or what you want to understand. That itself tells your story." },
             { id: 51, question_zh: "描述一下你理想中完美的一天", question_en: "Describe your perfect day", category: "趣味脑洞", level: "easy" },
             { id: 52, question_zh: "如果你是一部电影的主角，会是什么类型的电影？", question_en: "If you were the main character of a movie, what genre would it be?", category: "趣味脑洞", level: "medium" },
             { id: 53, question_zh: "如果可以和任何虚构角色做一天朋友，你选谁？", question_en: "If you could be friends with a fictional character for a day, who would you choose?", category: "趣味脑洞", level: "medium" },
             { id: 54, question_zh: "你觉得十年后的自己会在做什么？", question_en: "What do you think you'll be doing 10 years from now?", category: "趣味脑洞", level: "medium" },
-            { id: 55, question_zh: "如果地球上只剩下你一个人，你做的第一件事是什么？", question_en: "If you were the last person on Earth, what would you do first?", category: "趣味脑洞", level: "medium" },
+            { id: 55, question_zh: "如果地球上只剩下你一个人，你做的第一件事是什么？", question_en: "If you were the last person on Earth, what would you do first?", category: "趣味脑洞", level: "medium", twist_zh: "反转：你的第一反应往往暴露了你内心深处最真实的渴望——是自由、是安静、还是寻找他人？", twist_en: "Your first instinct reveals your deepest desire — is it freedom, peace, or searching for others?" },
             { id: 56, question_zh: "如果可以一键学会任何技能，你选什么？", question_en: "If you could learn any skill instantly, what would you choose?", category: "趣味脑洞", level: "medium" },
             { id: 57, question_zh: "如果时间可以暂停，你会用它来做什么？", question_en: "If you could pause time, what would you do with it?", category: "趣味脑洞", level: "medium" },
             { id: 58, question_zh: "如果可以交换身体一天，你想和谁换？", question_en: "If you could swap bodies for a day, who would you swap with?", category: "趣味脑洞", level: "medium" },
             { id: 59, question_zh: "如果这个世界有BGM，你觉得你的主题曲是什么？", question_en: "If the world had a soundtrack, what would your theme song be?", category: "趣味脑洞", level: "easy" },
             { id: 60, question_zh: "如果有一天你醒来发现自己变成了手机，你会怎么办？", question_en: "If you woke up one day as a smartphone, what would you do?", category: "趣味脑洞", level: "medium" },
 
-            { id: 61, question_zh: "你最喜欢的品质是什么？（自己或他人）", question_en: "What quality do you value most? (In yourself or others)", category: "普鲁斯特问卷", level: "medium" },
+            { id: 61, question_zh: "你最喜欢的品质是什么？（自己或他人）", question_en: "What quality do you value most? (In yourself or others)", category: "普鲁斯特问卷", level: "medium", twist_zh: "冷知识：心理学发现，我们最欣赏别人身上的品质，往往也是我们自己最渴望拥有的品质。你的答案藏着你对自己的期待。", twist_en: "Psychologists find that the quality we admire most in others is often what we most want in ourselves. Your answer reveals your own aspiration." },
             { id: 62, question_zh: "你最痛恨自己的哪个特点？", question_en: "What trait do you most dislike about yourself?", category: "普鲁斯特问卷", level: "hard" },
             { id: 63, question_zh: "如果可以改变一件事，你最想改变什么？", question_en: "If you could change one thing about yourself, what would it be?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 64, question_zh: "你最大的恐惧是什么？", question_en: "What is your biggest fear?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 64, question_zh: "你最大的恐惧是什么？", question_en: "What is your biggest fear?", category: "普鲁斯特问卷", level: "hard", twist_zh: "思考：知道一个人最怕什么，往往比知道Ta喜欢什么更能深入了解这个人。恐惧是了解内心的钥匙。", twist_en: "Knowing someone's greatest fear reveals more about them than knowing what they like. Fear is the key to understanding the heart." },
             { id: 65, question_zh: "你最理想的生活状态是什么样的？", question_en: "What does your ideal life look like?", category: "普鲁斯特问卷", level: "medium" },
             { id: 66, question_zh: "你觉得自己最大的优点是什么？", question_en: "What do you think is your greatest strength?", category: "普鲁斯特问卷", level: "medium" },
             { id: 67, question_zh: "如果可以重来，你最想修正的一个决定是什么？", question_en: "If you could start over, what decision would you most want to correct?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 68, question_zh: "你觉得什么是真正的幸福？", question_en: "What do you think true happiness is?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 68, question_zh: "你觉得什么是真正的幸福？", question_en: "What do you think true happiness is?", category: "普鲁斯特问卷", level: "hard", twist_zh: "哈佛一项长达85年的研究发现：决定幸福的最重要因素不是财富或成就，而是高质量的人际关系。你同意吗？", twist_en: "A 85-year Harvard study found the key to happiness is not wealth or achievement — it's quality relationships. Do you agree?" },
             { id: 69, question_zh: "你最珍惜的一段关系是什么？", question_en: "What relationship do you treasure the most?", category: "普鲁斯特问卷", level: "medium" },
             { id: 70, question_zh: "如果可以拥有一种超能力，你选什么？", question_en: "If you could have a superpower, what would it be?", category: "普鲁斯特问卷", level: "medium" },
             { id: 71, question_zh: "你认为什么是一个人最重要的品质？", question_en: "What do you think is the most important quality in a person?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 72, question_zh: "你最近一次哭是因为什么？", question_en: "What was the last thing that made you cry?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 72, question_zh: "你最近一次哭是因为什么？", question_en: "What was the last thing that made you cry?", category: "普鲁斯特问卷", level: "hard", twist_zh: "解读：愿意分享脆弱时刻的人，往往更真诚也更容易建立深度关系。敢于示弱，才是最强大的力量。", twist_en: "Those who share vulnerable moments are more sincere and build deeper connections. The courage to be vulnerable is true strength." },
             { id: 73, question_zh: "你觉得爱一个人应该是什么感觉？", question_en: "What do you think love should feel like?", category: "普鲁斯特问卷", level: "hard" },
             { id: 74, question_zh: "你做过最勇敢的一件事是什么？", question_en: "What's the bravest thing you've ever done?", category: "普鲁斯特问卷", level: "hard" },
             { id: 75, question_zh: "你最羡慕别人身上有什么而你却没有的？", question_en: "What do you envy in others that you don't have?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 76, question_zh: "你觉得人生中最重要的是什么？", question_en: "What do you think matters most in life?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 76, question_zh: "你觉得人生中最重要的是什么？", question_en: "What do you think matters most in life?", category: "普鲁斯特问卷", level: "hard", twist_zh: "值得思考：你的答案会随着年龄和经历改变。如果五年后再问自己一次，答案还会一样吗？", twist_en: "Your answer will change with age and experience. If asked again in 5 years, would your answer still be the same?" },
             { id: 77, question_zh: "你希望别人用哪三个词形容你？", question_en: "What three words would you want others to describe you with?", category: "普鲁斯特问卷", level: "medium" },
             { id: 78, question_zh: "你最后悔没做的一件事是什么？", question_en: "What's one thing you regret not doing?", category: "普鲁斯特问卷", level: "hard" },
             { id: 79, question_zh: "你觉得什么才算是真正的成长？", question_en: "What do you think real growth means?", category: "普鲁斯特问卷", level: "hard" },
             { id: 80, question_zh: "你小时候的梦想是什么？现在还在追吗？", question_en: "What was your childhood dream? Are you still pursuing it?", category: "普鲁斯特问卷", level: "medium" },
             { id: 81, question_zh: "你认为'家'对你来说意味着什么？", question_en: "What does 'home' mean to you?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 82, question_zh: "你觉得自己最脆弱的时候是什么时候？", question_en: "When do you feel most vulnerable?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 82, question_zh: "你觉得自己最脆弱的时候是什么时候？", question_en: "When do you feel most vulnerable?", category: "普鲁斯特问卷", level: "hard", twist_zh: "洞察：承认脆弱不是软弱，而是勇气的表现。真正的了解往往从愿意说出'我不好的时候'开始。", twist_en: "Admitting vulnerability isn't weakness — it's courage. True understanding begins when we're willing to say 'I'm not okay'." },
             { id: 83, question_zh: "如果可以给十年前的自己一个建议，你会说什么？", question_en: "If you could give one advice to your 10-years-ago self, what would it be?", category: "普鲁斯特问卷", level: "medium" },
             { id: 84, question_zh: "你觉得什么样的人值得被爱？", question_en: "What kind of person do you think deserves to be loved?", category: "普鲁斯特问卷", level: "hard" },
             { id: 85, question_zh: "你对自己最失望的一件事是什么？", question_en: "What's one thing you're most disappointed in yourself about?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 86, question_zh: "你相信命运吗？为什么？", question_en: "Do you believe in fate? Why or why not?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 86, question_zh: "你相信命运吗？为什么？", question_en: "Do you believe in fate? Why or why not?", category: "普鲁斯特问卷", level: "medium", twist_zh: "反转：相信命运还是相信自己——这个选择往往关乎你如何看待人生的主动权。你的答案就是你的世界观。", twist_en: "Believing in fate vs believing in yourself — this choice reveals how you see control over your life. Your answer is your worldview." },
             { id: 87, question_zh: "你觉得父母对你的影响有多大？", question_en: "How much do you think your parents have influenced you?", category: "普鲁斯特问卷", level: "medium" },
             { id: 88, question_zh: "你心中最完美的一天是什么样子的？", question_en: "What does your most perfect day look like?", category: "普鲁斯特问卷", level: "medium" },
             { id: 89, question_zh: "你觉得幸福和快乐的区别是什么？", question_en: "What's the difference between happiness and joy in your opinion?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 90, question_zh: "你觉得自己活着的意义是什么？", question_en: "What do you think is your purpose in life?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 90, question_zh: "你觉得自己活着的意义是什么？", question_en: "What do you think is your purpose in life?", category: "普鲁斯特问卷", level: "hard", twist_zh: "深度追问：人生的意义或许不是一个能回答的答案，而是一道值得用一生去追问的题目。你什么时候开始思考这个问题的？", twist_en: "Life's meaning may not be an answer you find, but a question worth asking your whole life. When did you start thinking about this?" },
             { id: 91, question_zh: "你觉得孤独和独处的区别是什么？", question_en: "What's the difference between loneliness and being alone?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 92, question_zh: "你觉得自己在什么情况下最真实？", question_en: "In what situations do you feel most authentic?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 92, question_zh: "你觉得自己在什么情况下最真实？", question_en: "In what situations do you feel most authentic?", category: "普鲁斯特问卷", level: "medium", twist_zh: "有用的启发：知道自己何时最真实，就能在生活中创造更多那样的时刻。你的答案可能藏着你真正热爱的生活方式。", twist_en: "Knowing when you're most authentic helps you create more of those moments. Your answer might reveal your true preferred way of living." },
             { id: 93, question_zh: "你心底里最感谢的人是谁？", question_en: "Who are you most grateful for deep inside?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 94, question_zh: "你觉得一个人成熟的标志是什么？", question_en: "What do you think is the sign of maturity?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 94, question_zh: "你觉得一个人成熟的标志是什么？", question_en: "What do you think is the sign of maturity?", category: "普鲁斯特问卷", level: "medium", twist_zh: "冷知识：心理学认为成熟的标志不是年龄，而是能否为自\u5df1的情绪和行为负责。你觉得自己达到成熟了吗？", twist_en: "Psychology says maturity isn't about age — it's about taking responsibility for your emotions and actions. Do you think you're mature?" },
             { id: 95, question_zh: "你愿意为什么事情付出一切？", question_en: "What would you give everything for?", category: "普鲁斯特问卷", level: "hard" },
             { id: 96, question_zh: "你觉得朋友和家人的区别是什么？", question_en: "What's the difference between friends and family?", category: "普鲁斯特问卷", level: "medium" },
             { id: 97, question_zh: "你觉得自己最大的缺点是什么？", question_en: "What do you think is your biggest flaw?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 98, question_zh: "你生命中最重要的转折点是什么？", question_en: "What was the most important turning point in your life?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 99, question_zh: "你觉得什么才算真正的成功？", question_en: "What do you consider true success?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 98, question_zh: "你生命中最重要的转折点是什么？", question_en: "What was the most important turning point in your life?", category: "普鲁斯特问卷", level: "hard", twist_zh: "洞察：一个人生命中的转折点往往不是偶然，而是之前所有选择的总和。你能看到自己是怎么一步步走到今天的吗？", twist_en: "Life's turning points are rarely accidents — they're the sum of all previous choices. Can you see how you got to where you are today?" },
+            { id: 99, question_zh: "你觉得什么才算真正的成功？", question_en: "What do you consider true success?", category: "普鲁斯特问卷", level: "hard", twist_zh: "反思：如果成功只是比别人好，那永远有人比你更好。真正的成功或许是比昨天的自己更好。你怎么看？", twist_en: "If success is just being better than others, there's always someone better. True success might be being better than who you were yesterday." },
             { id: 100, question_zh: "你对自己未来最美好的期待是什么？", question_en: "What's your best hope for your future?", category: "普鲁斯特问卷", level: "medium" },
             { id: 101, question_zh: "你觉得信任需要多久建立？一瞬间还是很久？", question_en: "How long does it take to build trust? A moment or a long time?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 102, question_zh: "你害怕变老吗？为什么？", question_en: "Are you afraid of getting old? Why?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 102, question_zh: "你害怕变老吗？为什么？", question_en: "Are you afraid of getting old? Why?", category: "普鲁斯特问卷", level: "medium", twist_zh: "冷知识：调查显示，人们最怕的不是变老本身，而是老去时还有未完成的遗憾。你有哪些不想带进坟墓的愿望？", twist_en: "Surveys show people fear not aging itself, but having regrets when they're old. What wishes don't you want to take to the grave?" },
             { id: 103, question_zh: "你觉得什么样的友谊最持久？", question_en: "What kind of friendship lasts the longest?", category: "普鲁斯特问卷", level: "medium" },
             { id: 104, question_zh: "你曾经为了别人改变自己吗？值得吗？", question_en: "Have you ever changed yourself for someone else? Was it worth it?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 105, question_zh: "你觉得原谅和忘记哪个更难？", question_en: "Which is harder: forgiving or forgetting?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 106, question_zh: "你死后希望别人怎么记住你？", question_en: "How do you want to be remembered after you're gone?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 105, question_zh: "你觉得原谅和忘记哪个更难？", question_en: "Which is harder: forgiving or forgetting?", category: "普鲁斯特问卷", level: "hard", twist_zh: "洞察：原谅是为了让自己放下，忘记是为了继续前行。两者都需要勇气，但得到的东西不一样。你觉得呢？", twist_en: "Forgiveness is for letting go, forgetting is for moving on. Both take courage, but they give you different things. What do you think?" },
+            { id: 106, question_zh: "你死后希望别人怎么记住你？", question_en: "How do you want to be remembered after you're gone?", category: "普鲁斯特问卷", level: "hard", twist_zh: "值得思考：你希望被记住的方式，其实就是你希望自己活成的样子。从今天开始活成那样，还来得及。", twist_en: "How you want to be remembered is how you want to have lived. It's never too late to start living that way starting today." },
             { id: 107, question_zh: "你觉得自己内心是大人还是小孩？", question_en: "Do you feel like an adult or a child inside?", category: "普鲁斯特问卷", level: "medium" },
             { id: 108, question_zh: "你生命中最让你骄傲的成就是什么？", question_en: "What achievement in life are you most proud of?", category: "普鲁斯特问卷", level: "medium" },
             { id: 109, question_zh: "你觉得爱情和友情哪个更长久？", question_en: "Which lasts longer: love or friendship?", category: "普鲁斯特问卷", level: "medium" },
             { id: 110, question_zh: "你愿意为了梦想放弃稳定的生活吗？", question_en: "Would you give up a stable life for your dreams?", category: "普鲁斯特问卷", level: "hard" },
             { id: 111, question_zh: "你觉得人生中什么是最不可辜负的？", question_en: "What in life should never be let down?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 112, question_zh: "你觉得自己了解自己吗？", question_en: "Do you think you truly understand yourself?", category: "普鲁斯特问卷", level: "medium" },
+            { id: 112, question_zh: "你觉得自己了解自己吗？", question_en: "Do you think you truly understand yourself?", category: "普鲁斯特问卷", level: "medium", twist_zh: "苏格拉底说：'认识你自己。' 这是一生的课题——今天的你和昨天的你可能已经不一样了。你多久重新认识一次自己？", twist_en: "Socrates said 'Know yourself.' It's a lifelong journey — today's you might be different from yesterday's. How often do you rediscover yourself?" },
             { id: 113, question_zh: "你什么时候最想念一个人？", question_en: "When do you miss someone the most?", category: "普鲁斯特问卷", level: "medium" },
             { id: 114, question_zh: "你觉得人性本善还是本恶？", question_en: "Do you believe human nature is inherently good or evil?", category: "普鲁斯特问卷", level: "hard" },
             { id: 115, question_zh: "你做过的最无私的一件事是什么？", question_en: "What's the most selfless thing you've ever done?", category: "普鲁斯特问卷", level: "hard" },
-            { id: 116, question_zh: "如果生命只剩一年，你会怎么过？", question_en: "If you had one year left to live, how would you spend it?", category: "普鲁斯特问卷", level: "hard" },
+            { id: 116, question_zh: "如果生命只剩一年，你会怎么过？", question_en: "If you had one year left to live, how would you spend it?", category: "普鲁斯特问卷", level: "hard", twist_zh: "反转：如果生命只剩一年，你的计划和现在的生活会有多大不同？如果差异很大，为什么不从现在开始改变一点点？", twist_en: "If you had one year left, how different would your life be? If very different, why not start making small changes now?" },
             { id: 117, question_zh: "你觉得什么样的人生才算没有遗憾？", question_en: "What kind of life would be without regret?", category: "普鲁斯特问卷", level: "hard" },
             { id: 118, question_zh: "你曾经被误解最深的一次是什么时候？", question_en: "When were you most misunderstood?", category: "普鲁斯特问卷", level: "hard" },
             { id: 119, question_zh: "你觉得时间是治愈一切的良药吗？", question_en: "Do you think time heals all wounds?", category: "普鲁斯特问卷", level: "medium" },
-            { id: 120, question_zh: "此时此刻，你最想对谁说什么？", question_en: "Right now, who do you most want to speak to and what would you say?", category: "普鲁斯特问卷", level: "medium" }
+            { id: 120, question_zh: "此时此刻，你最想对谁说什么？", question_en: "Right now, who do you most want to speak to and what would you say?", category: "普鲁斯特问卷", level: "medium", twist_zh: "现在就试试：如果那个人就在你面前，你会怎么说？有时候最想说的话，就是最不该等的话。", twist_en: "Try it right now: if that person were here, what would you say? Sometimes the words we most want to say are the ones we shouldn't wait to say." }
         ];
 
         let currentPlayerIndex = 1;
@@ -480,14 +508,47 @@
         let pickerFilter = '全部';
         let currentQuestionPicker = null;
         let browseFilter = '全部';
+        let browseRandomized = false;
 
         function bilingualHTML(item) {
-            return `<div class="question-text">${item.question_zh}</div><div class="question-en">${item.question_en}</div>`;
+            let html = `<div class="question-text">${item.question_zh}</div><div class="question-en">${item.question_en}</div>`;
+            if (item.twist_zh) {
+                html += `<div class="twist-box"><div class="twist-text">💡 ${item.twist_zh}</div>`;
+                if (item.twist_en) {
+                    html += `<div class="twist-en">${item.twist_en}</div>`;
+                }
+                html += `</div>`;
+            }
+            return html;
         }
 
         function getLevelLabel(level) {
             const map = { easy: '轻松', medium: '趣味', hard: '深度' };
             return map[level] || level;
+        }
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function toggleBrowseRandom() {
+            browseRandomized = !browseRandomized;
+            const btn = document.getElementById('shuffle-btn');
+            const status = document.getElementById('shuffle-status');
+            if (browseRandomized) {
+                btn.classList.add('shuffle-btn-active');
+                btn.innerHTML = '🔀 随机排列';
+                status.textContent = '当前：随机排序';
+            } else {
+                btn.classList.remove('shuffle-btn-active');
+                btn.innerHTML = '🔀 顺序排列';
+                status.textContent = '';
+            }
+            renderBrowseList();
         }
 
         function showPage(pageId) {
@@ -627,11 +688,20 @@
 
         function renderBrowseList() {
             const container = document.getElementById('browse-list');
-            const list = browseFilter === '全部' 
-                ? questionDB 
+            let list = browseFilter === '全部' 
+                ? [...questionDB] 
                 : questionDB.filter(q => q.category === browseFilter);
             
-            container.innerHTML = list.map(q => `
+            if (browseRandomized) {
+                shuffleArray(list);
+            }
+            
+            container.innerHTML = list.map(q => {
+                let twistHtml = '';
+                if (q.twist_zh) {
+                    twistHtml = `<div class="twist-box" style="margin-top: 8px;"><div class="twist-text" style="font-size: 13px;">💡 ${q.twist_zh}</div></div>`;
+                }
+                return `
                 <div class="card" style="padding: 16px;">
                     <div style="margin-bottom: 8px;">
                         <span class="tag tag-category" style="font-size: 11px;">${q.category}</span>
@@ -639,8 +709,9 @@
                     </div>
                     <div style="font-size: 15px; line-height: 1.5; margin-bottom: 6px;">${q.question_zh}</div>
                      <div style="font-size: 13px; color: var(--neon-cyan); line-height: 1.4;">${q.question_en}</div>
+                    ${twistHtml}
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function shareGame() {
